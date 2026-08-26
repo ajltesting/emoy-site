@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · EMOY</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icon.png">
+</head>
+<body>
+<header>
+  <a class="brand" href="/">
+    <img src="mark.png" alt="" width="34" height="34">
+    <span class="wordmark">EMOY<span class="dot">.</span></span>
+  </a>
+</header>
+<main>
+<h1>EMOY — Privacy Policy</h1>
+<p><strong>Effective date:</strong> 25 August 2026 <strong>Contact:</strong> support@emoy.app</p>
+<h2>Who we are</h2>
+<p>EMOY ("the app") is a shared care record for parents and caregivers. It is operated by the individual developer reachable at the contact address above.</p>
+<h2>The short version</h2>
+<ul><li>Your family's data is <strong>private to your household</strong> by default. Nothing is public, and there is no public profile.</li><li>We <strong>do not sell your data</strong>, and we do not share it with advertisers.</li><li>There are <strong>no advertising, analytics or tracking SDKs</strong> in the app.</li><li>You can <strong>delete your account and your data from inside the app</strong>, at any time, without contacting us.</li></ul>
+<h2>What the app stores</h2>
+<p>Everything below is stored because the app cannot do its job without it. There is no secondary collection.</p>
+<h3>Your account</h3>
+<ul><li><strong>Email address and password.</strong> Handled by our authentication provider; the password is stored only as a salted hash, never in readable form.</li><li><strong>Display name.</strong> Used to show who logged each entry ("Logged by Ayden").</li></ul>
+<h3>Your child's profile</h3>
+<ul><li>Name, date of birth, sex, and whether they were born prematurely (with gestational age, if given).</li><li>Birth weight and birth length, if entered. Optional.</li></ul>
+<p>Sex and gestational age are stored because growth percentiles are calculated against sex-specific and age-corrected WHO/CDC reference tables. They are not used for anything else.</p>
+<h3>Care records</h3>
+<ul><li><strong>Sleep, feeding, nappy changes and activities</strong> — start and end times, plus details for each kind: feed volumes and units, nursing side and duration, nappy contents, colour and size, activity type.</li><li><strong>Growth measurements</strong> — weight, length, the date measured, and any note.</li><li><strong>Milestones</strong> — which developmental or "first" milestones were reached, when, and any note.</li></ul>
+<h3>Photos and videos</h3>
+<ul><li>Photos and videos you add, and any milestone they are attached to.</li><li>These are stored in <strong>private storage</strong>. They are never public. They are served only through short-lived signed links to people you have shared with.</li></ul>
+<h3>Who you share with</h3>
+<ul><li>Your household and its members, and each member's role.</li><li>Your Circles, who is in them, and which categories each Circle can see.</li><li>Comments and reactions people leave on shared photos and milestones.</li><li>A record of anyone removed and blocked from a household or Circle, so they cannot rejoin with a shared invite code.</li></ul>
+<h3>Diagnostics</h3>
+<p>The app sends <strong>crash reports and performance data</strong> to Sentry so that failures on real devices can be found and fixed. This is deliberately configured to exclude personal information: identifying request data is disabled, session replay (screen recording) is <strong>not</strong> enabled, and crash reports are not associated with your account.</p>
+<h3>Stored only on your own device</h3>
+<p>Your appearance preference (day/night), your measurement units, and whether you have seen the introductory walkthrough. These never leave your phone.</p>
+<h2>What the app does NOT do</h2>
+<ul><li>No advertising, and no advertising identifiers.</li><li>No analytics or behavioural tracking SDKs.</li><li>No selling, renting or sharing of personal information with third parties for their own purposes.</li><li>No access to your device's contacts, location, microphone, or health data from Apple Health or Google Fit.</li><li>No use of your photos or your child's data to train machine-learning models.</li><li>Push notifications are not used. Milestone reminders are scheduled locally on your device and never involve a server.</li></ul>
+<h2>Why we process this data</h2>
+<p>To operate the service you asked for: to record and display your child's care, to synchronise it between the caregivers in your household in real time, to show the slices you have chosen to share with your Circle, and to keep the app working (diagnostics).</p>
+<p>Where GDPR applies, our lawful basis is <strong>performance of a contract</strong> for the core service, and <strong>legitimate interests</strong> for diagnostics. Health-related data (growth measurements, care records) is processed on the basis of your <strong>explicit consent</strong>, given by choosing to enter it, and you may withdraw that consent by deleting the data or your account.</p>
+<h2>About the child's data</h2>
+<p>The information in this app is *about* a child but is provided *by* an adult caregiver who holds the account. The app is not directed at children, is not offered in the Kids Category, and we do not knowingly allow anyone under 13 to create an account.</p>
+<p>The adult account holder is responsible for what they enter and for whom they invite into a Circle.</p>
+<h2>Who else is involved</h2>
+<p>We use three service providers. They process data on our behalf, under their own security commitments, and are not permitted to use it for their own purposes.</p>
+<table><thead><tr><th>Provider</th><th>What they do</th><th>What they see</th></tr></thead><tbody><tr><td><strong>Supabase</strong></td><td>Database, authentication and file storage</td><td>All app data described above</td></tr><tr><td><strong>Sentry</strong></td><td>Crash and performance reporting</td><td>Diagnostic data only; no account or child data</td></tr><tr><td><strong>Expo (EAS)</strong></td><td>Delivers app updates</td><td>Technical request data needed to serve an update</td></tr></tbody></table>
+<h2>Security</h2>
+<ul><li>All traffic between the app and our servers is encrypted in transit (HTTPS).</li><li>Data is encrypted at rest by our database and storage provider.</li><li>Access is enforced at the database level by row-level security rules, not only in the app: a household's records are readable only by that household's members, and a Circle member can read only the categories that Circle has been granted.</li><li>Photos and videos are held in a private bucket and are never publicly addressable.</li></ul>
+<p>No system is perfectly secure, and we cannot guarantee absolute security.</p>
+<h2>How long we keep it</h2>
+<p>We keep your data for as long as your account exists.</p>
+<ul><li><strong>Delete your account</strong> — Settings → Delete my account. This permanently deletes your login and removes your access. If you are the only member of a household, that household and everything in it is permanently deleted. If others remain, the shared record stays intact for them, with your entries no longer attributed to you.</li><li><strong>Leave a household or Circle</strong> — removes your access without deleting the shared record.</li></ul>
+<p>Deletion is immediate and cannot be undone. Backups may retain data for a short period before being cycled out.</p>
+<h2>Your rights</h2>
+<p>Depending on where you live, you may have the right to access, correct, export, or delete your personal information, to object to or restrict processing, and to complain to a data protection authority.</p>
+<p>Most of this is available directly in the app: your data is visible to you, editable by you, and deletable by you. For anything else, contact us at the address above and we will respond within 30 days.</p>
+<h2>Changes</h2>
+<p>If this policy changes materially, we will update the effective date above and notify you in the app before the change takes effect.</p>
+</main>
+<footer>
+  <a href="/">Home</a>
+  <a href="/privacy">Privacy</a>
+  <a href="/delete-account">Delete your account</a>
+  <span>support@emoy.app</span>
+</footer>
+</body>
+</html>

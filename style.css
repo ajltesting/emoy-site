@@ -1,0 +1,69 @@
+/* EMOY legal pages. Same Organic palette as the app (src/lib/theme.ts) so the
+   privacy policy does not look like it belongs to a different product than the
+   app that links to it. Values copied from the theme's light and dark sets. */
+:root {
+  --bg: #ebddc5;
+  --card: #f5ead8;
+  --text: #201e1d;
+  --muted: #6b6357;
+  --faint: #a19786;
+  --kicker: #9c4f1d;
+  --accent: #c67139;
+  --hairline: #e0d2b8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #211d19;
+    --card: #2b2621;
+    --text: #f0e6d6;
+    --muted: #c8bba7;
+    --faint: #9d9082;
+    --kicker: #e09a63;
+    --accent: #e09a63;
+    --hairline: #3a332c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+header, main, footer { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+header { padding-top: 34px; padding-bottom: 10px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.wordmark { font-size: 19px; font-weight: 700; letter-spacing: .5px; color: var(--text); }
+.dot { color: var(--accent); }
+main { padding-bottom: 40px; }
+h1 { font-size: 30px; line-height: 1.25; margin: 26px 0 6px; }
+h2 { font-size: 20px; margin: 36px 0 8px; }
+h3 { font-size: 16px; margin: 26px 0 6px; }
+p { margin: 12px 0; }
+ul { margin: 12px 0; padding-left: 22px; }
+li { margin: 6px 0; }
+a { color: var(--kicker); }
+code {
+  background: var(--card); border-radius: 5px; padding: 1px 5px;
+  font-size: .9em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+blockquote {
+  margin: 18px 0; padding: 14px 18px; background: var(--card);
+  border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0;
+  color: var(--muted);
+}
+/* Tables must scroll rather than force the page sideways on a phone. */
+table {
+  display: block; overflow-x: auto; width: 100%;
+  border-collapse: collapse; margin: 18px 0; font-size: 15px;
+}
+th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--hairline); }
+th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+footer {
+  border-top: 1px solid var(--hairline); padding-top: 18px; padding-bottom: 44px;
+  color: var(--faint); font-size: 14px;
+  display: flex; flex-wrap: wrap; gap: 18px;
+}
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--kicker); }
