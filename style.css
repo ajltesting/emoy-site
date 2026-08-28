@@ -24,46 +24,451 @@
   }
 }
 * { box-sizing: border-box; }
-body {
+body:not(.lp) {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
 }
-header, main, footer { max-width: 720px; margin: 0 auto; padding: 0 22px; }
-header { padding-top: 34px; padding-bottom: 10px; }
+body:not(.lp) header, body:not(.lp) main, body:not(.lp) footer { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+body:not(.lp) header { padding-top: 34px; padding-bottom: 10px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-.wordmark { font-size: 19px; font-weight: 700; letter-spacing: .5px; color: var(--text); }
+/* The mark was a hard 34px and the wordmark a hard 19px, which is legible in a
+   desktop header and nearly invisible on a phone — the width/height attributes
+   in the HTML are intrinsic hints, and nothing was overriding them. Both now
+   scale with the viewport, clamped so they never outgrow the header either. */
+.brand img { width: clamp(32px, 8.5vw, 40px); height: auto; }
+.wordmark {
+  font-size: clamp(20px, 5.5vw, 24px); font-weight: 700;
+  letter-spacing: .5px; color: var(--text);
+}
 .dot { color: var(--accent); }
-main { padding-bottom: 40px; }
-h1 { font-size: 30px; line-height: 1.25; margin: 26px 0 6px; }
-h2 { font-size: 20px; margin: 36px 0 8px; }
-h3 { font-size: 16px; margin: 26px 0 6px; }
-p { margin: 12px 0; }
-ul { margin: 12px 0; padding-left: 22px; }
-li { margin: 6px 0; }
-a { color: var(--kicker); }
-code {
+body:not(.lp) main { padding-bottom: 40px; }
+body:not(.lp) h1 { font-size: 30px; line-height: 1.25; margin: 26px 0 6px; }
+body:not(.lp) h2 { font-size: 20px; margin: 36px 0 8px; }
+body:not(.lp) h3 { font-size: 16px; margin: 26px 0 6px; }
+body:not(.lp) p { margin: 12px 0; }
+body:not(.lp) ul { margin: 12px 0; padding-left: 22px; }
+body:not(.lp) li { margin: 6px 0; }
+body:not(.lp) a { color: var(--kicker); }
+body:not(.lp) code {
   background: var(--card); border-radius: 5px; padding: 1px 5px;
   font-size: .9em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
-blockquote {
+body:not(.lp) blockquote {
   margin: 18px 0; padding: 14px 18px; background: var(--card);
   border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0;
   color: var(--muted);
 }
 /* Tables must scroll rather than force the page sideways on a phone. */
-table {
+body:not(.lp) table {
   display: block; overflow-x: auto; width: 100%;
   border-collapse: collapse; margin: 18px 0; font-size: 15px;
 }
-th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--hairline); }
-th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-footer {
+body:not(.lp) th, body:not(.lp) td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--hairline); }
+body:not(.lp) th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+body:not(.lp) footer {
   border-top: 1px solid var(--hairline); padding-top: 18px; padding-bottom: 44px;
   color: var(--faint); font-size: 14px;
   display: flex; flex-wrap: wrap; gap: 18px;
 }
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--kicker); }
+body:not(.lp) footer a { color: var(--muted); text-decoration: none; }
+body:not(.lp) footer a:hover { color: var(--kicker); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LANDING PAGE (body.lp) — site/index.html
+
+   Everything above is the two generated legal pages and is scoped to
+   body:not(.lp). The split matters for one specific reason: the legal pages
+   have a prefers-color-scheme dark mode and this page deliberately does not
+   (the night variant was explored and cancelled). Sharing one unscoped
+   `body { background: var(--bg) }` would have handed a dark-mode visitor an
+   ink background under light-mode tokens.
+
+   Values are the app's shipped ones from src/lib/theme.ts. The site matches
+   the app, not the other way round.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.lp {
+  /* Light ground */
+  --ground: #f5ead8;
+  --surface: #ebddc5;
+  --surface-2: #e0d0b4;
+  --ink: #201e1d;
+  --body: #3c3733;
+  --muted: #6b6357;
+  --faint: #a19786;
+  --rule: #ddcfb6;
+  --rule-on-surface: #e0d2b8;
+  --accent: #c67139;
+  --accent-deep: #9c4f1d;
+  --sage: #7a8a5e;
+  --sage-deep: #5c6b45;
+
+  /* Ink ground — the privacy section only */
+  --ink-ground: #211d19;
+  --ink-surface: #2b2621;
+  --ink-cream: #f0e6d6;
+  --ink-secondary: #d5c9b5;
+  --ink-muted: #9d9082;
+  --ink-accent: #e09a63;
+
+  /* One horizontal padding value, shared by the sections and by the phone
+     rail's negative margin — they have to agree or the rail will not bleed
+     cleanly to the page edge. */
+  --pad-x: clamp(20px, 5vw, 48px);
+  --pad-y: clamp(48px, 6vw, 80px);
+  --measure: 1144px;
+
+  margin: 0;
+  background: var(--ground);
+  color: var(--body);
+  font: 400 16px/1.6 "Figtree", system-ui, -apple-system, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+.lp *, .lp *::before, .lp *::after { box-sizing: border-box; }
+.lp h1, .lp h2, .lp h3 {
+  font-family: "Caprasimo", Georgia, serif;
+  font-weight: 400;               /* Caprasimo ships one weight; never bold it */
+  color: var(--ink);
+  margin: 0;
+}
+.lp h1 { font-size: clamp(40px, 9vw, 70px); line-height: 1; letter-spacing: -.5px; }
+.lp h2 { font-size: clamp(32px, 5.5vw, 46px); line-height: 1.08; text-wrap: pretty; max-width: 24em; }
+.lp h2.h2-village { font-size: clamp(34px, 6vw, 52px); line-height: 1.06; max-width: 22em; }
+.lp h3 { font-size: clamp(20px, 2.4vw, 24px); line-height: 1.2; }
+.lp p { margin: 0; }
+.lp a { color: var(--accent-deep); text-decoration: none; }
+.lp a:hover { color: var(--accent); }
+.lp img { max-width: 100%; }
+.lp ul, .lp ol { margin: 0; padding: 0; list-style: none; }
+
+html { scroll-behavior: smooth; }
+
+.kicker {
+  font: 600 13px/1 "Figtree", sans-serif; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent-deep); margin-bottom: 14px;
+}
+.lede { font-size: clamp(17px, 2vw, 20px); line-height: 1.6; color: var(--body); text-wrap: pretty; }
+.lede-wide { max-width: 46em; margin-top: 20px; }
+.para { font-size: 16px; line-height: 1.65; color: var(--body); text-wrap: pretty; }
+.para + .para { margin-top: 12px; }
+
+/* ── Bands ───────────────────────────────────────────────────────────────── */
+.band { padding: var(--pad-y) var(--pad-x); scroll-margin-top: 24px; }
+.band > * { max-width: var(--measure); margin-inline: auto; }
+.band.ink { background: var(--ink-ground); }
+.band.ink h2, .band.ink h3 { color: var(--ink-cream); }
+.band.ink .lede, .band.ink .para { color: var(--ink-secondary); }
+.band.ink .kicker { color: var(--ink-accent); }
+
+/* ── Beta banner + header ────────────────────────────────────────────────── */
+.beta-banner {
+  background: var(--ink); color: var(--ink-cream);
+  font: 500 14px/1.5 "Figtree", sans-serif;
+  padding: 11px var(--pad-x);
+  display: flex; gap: 10px; align-items: center; justify-content: center;
+  text-align: center;
+}
+.beta-dot {
+  width: 7px; height: 7px; border-radius: 999px; background: var(--ink-accent);
+  flex: 0 0 auto; animation: emoyPulse 2.4s ease-in-out infinite;
+}
+.site-header {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 16px;
+  padding: 22px var(--pad-x);
+  max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
+}
+.lp .brand { display: flex; align-items: center; gap: 11px; }
+.lp .wordmark {
+  font-family: "Caprasimo", Georgia, serif; font-weight: 400;
+  font-size: clamp(21px, 5vw, 25px); letter-spacing: .5px; color: var(--ink);
+}
+.lp .dot { color: var(--accent); }
+.nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 30px); }
+.nav-desktop { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 30px); }
+.nav-desktop a, .nav-mobile a { font: 500 15px/1 "Figtree", sans-serif; color: var(--muted); }
+.nav-desktop a:hover, .nav-mobile a:hover { color: var(--accent-deep); }
+.nav-mobile { display: none; position: relative; }
+.nav-mobile > summary {
+  list-style: none; cursor: pointer;
+  font: 500 15px/1 "Figtree", sans-serif; color: var(--muted);
+  padding: 10px 2px;
+}
+.nav-mobile > summary::-webkit-details-marker { display: none; }
+.nav-mobile > summary { white-space: nowrap; }
+.nav-mobile > summary::after { content: " ▾"; }
+.nav-mobile[open] > summary::after { content: " ▴"; }
+.nav-mobile > ul {
+  position: absolute; z-index: 20; top: calc(100% + 8px); left: 0; min-width: 190px;
+  background: var(--ground); border: 1px solid var(--rule); border-radius: 16px;
+  padding: 8px; box-shadow: 0 14px 30px rgba(32, 30, 29, .14);
+}
+.nav-mobile > ul a { display: block; padding: 11px 12px; border-radius: 10px; }
+.nav-mobile > ul a:hover { background: var(--surface); }
+
+/* ── Pills ───────────────────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px; font: 600 14px/1 "Figtree", sans-serif;
+  padding: 12px 20px; white-space: nowrap;
+}
+/* Cream on #c67139 measures 3.03:1 — the large-text threshold, not the normal
+   one. It is the design's explicit ruling for light mode (and it is what the
+   app ships); the alternative pairing it exists to prevent, cream on the night
+   accent #e09a63, is 1.97:1. Flagged rather than silently substituted. */
+.pill-solid { background: var(--accent); color: var(--ground); }
+.pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
+.pill-outline { border: 1.5px solid rgba(32, 30, 29, .22); color: var(--ink); }
+.pill-outline:hover { border-color: var(--accent); color: var(--accent-deep); }
+.pill-outline-ink { border: 1.5px solid rgba(240, 230, 214, .3); color: var(--ink-cream); padding: 15px 24px; font-size: 15px; }
+.pill-outline-ink:hover { border-color: var(--ink-accent); color: var(--ink-accent); }
+.pill-lg { font-size: clamp(15px, 1.6vw, 17px); padding: 17px 26px; }
+.pill-sm { font-size: 14px; padding: 13px 20px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+/* ── 1. Hero ─────────────────────────────────────────────────────────────── */
+.hero {
+  display: grid; grid-template-columns: 1.06fr .94fr; gap: 40px; align-items: center;
+  padding: clamp(36px, 5vw, 56px) var(--pad-x) clamp(48px, 7vw, 72px);
+  max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
+}
+.hero .lede { margin-top: 26px; max-width: 30em; }
+.badges { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; margin-top: 30px; }
+.badge-slot {
+  width: 178px; min-height: 56px; border: 1.5px dashed rgba(32, 30, 29, .28);
+  border-radius: 12px; display: flex; flex-direction: column; justify-content: center;
+  padding: 8px 14px; gap: 3px;
+}
+.badge-eyebrow { font: 600 11px/1.3 "Figtree", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.badge-label { font: 600 14px/1.3 "Figtree", sans-serif; color: var(--muted); }
+.badge-note { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 34em; }
+
+.hero-cards { position: relative; display: flex; flex-direction: column; gap: 18px; padding: 24px 0; }
+.blob { position: absolute; border-radius: 999px; z-index: 0; }
+.blob-lg { right: -8px; top: 0; width: 430px; height: 430px; background: #e3d0b0; }
+.blob-sm { left: -16px; bottom: 0; width: 168px; height: 168px; background: #dfd7c0; }
+
+.card { background: var(--ground); border-radius: 22px; padding: 22px; }
+.hero-cards .card { position: relative; z-index: 1; box-shadow: 0 18px 40px rgba(32, 30, 29, .16); }
+.card-timer { width: min(404px, 100%); animation: emoyBreath 7s ease-in-out infinite; }
+.card-milestone { width: min(428px, 100%); align-self: flex-end; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-eyebrow { font: 600 12px/1.3 "Figtree", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-deep); }
+.card-eyebrow-sage { color: var(--sage-deep); }
+.card-meta { font: 500 13px/1.4 "Figtree", sans-serif; color: var(--muted); }
+.card-head .card-meta { flex: 0 0 auto; white-space: nowrap; }
+.running { display: flex; align-items: center; gap: 7px; font: 600 12px/1 "Figtree", sans-serif; color: var(--muted); }
+.dot-pulse { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); animation: emoyPulse 1.8s ease-in-out infinite; }
+.timer {
+  margin: 12px 0 4px; font-family: "Caprasimo", Georgia, serif;
+  font-size: clamp(44px, 11vw, 60px); line-height: 1; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.card-body { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.milestone-name { margin-top: 12px; font-family: "Caprasimo", Georgia, serif; font-size: clamp(22px, 5vw, 26px); line-height: 1.1; color: var(--ink); }
+.range-note { margin-top: 6px; font: 500 13px/1.4 "Figtree", sans-serif; color: var(--sage-deep); }
+.tile-row { display: flex; gap: 6px; margin-top: 14px; }
+.tile { position: relative; overflow: hidden; flex: 1; aspect-ratio: 1; border-radius: 12px; background: var(--rule); }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.reacted { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.avatars { display: flex; }
+.avatar { width: 30px; height: 30px; border-radius: 999px; color: var(--ground); font: 700 12px/30px "Figtree", sans-serif; text-align: center; }
+.avatar + .avatar { margin-left: -9px; border: 2px solid var(--ground); }
+.avatar-sage { background: var(--sage); }
+.avatar-blue { background: #5f7583; }
+.avatar-terra { background: var(--accent); }
+.reacted-text { flex: 1; font: 500 14px/1.4 "Figtree", sans-serif; color: var(--body); }
+
+/* ── 2. Our story ────────────────────────────────────────────────────────── */
+.story-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 52px; align-items: center; }
+.signature { margin-top: 18px; font: 600 14px/1.5 "Figtree", sans-serif; color: var(--muted); }
+.story-photo { margin: 0; background: var(--surface-2); border-radius: 220px 220px 28px 28px; overflow: hidden; }
+.story-photo img {
+  display: block; width: 100%; height: clamp(300px, 62vw, 440px);
+  object-fit: cover; filter: saturate(.85);
+}
+
+/* ── 3. What it is ───────────────────────────────────────────────────────── */
+.what-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; margin-top: 40px; align-items: start; }
+.day-card { background: var(--surface); padding: 24px; }
+.day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.day-date { font-family: "Caprasimo", Georgia, serif; font-size: 22px; color: var(--ink); }
+.day-meta { font: 600 11px/1.3 "Figtree", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rows { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.row {
+  position: relative; display: flex; align-items: center; gap: 12px;
+  background: var(--tile-bg); border-radius: 14px; padding: 11px 14px;
+}
+.rail { align-self: stretch; flex: 0 0 4px; border-radius: 999px; background: var(--rail); }
+.row-main { flex: 1; min-width: 0; }
+.row-time { display: block; font: 500 15px/1.35 "Figtree", sans-serif; color: var(--ink); }
+.row-qual { display: block; font: 400 12px/1.4 "Figtree", sans-serif; color: var(--muted); }
+.row-right { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.row-value { font: 600 15px/1 "Figtree", sans-serif; color: var(--tile-fg); font-variant-numeric: tabular-nums; }
+.chip { background: rgba(255, 255, 255, .55); border-radius: 999px; padding: 5px 10px; font: 600 11px/1 "Figtree", sans-serif; color: var(--tile-fg); }
+.row-live { box-shadow: inset 0 0 0 1.5px rgba(140, 73, 26, .35); }
+.row-live .rail { animation: emoyPulse 2.6s ease-in-out infinite; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule-on-surface); }
+.legend li { display: flex; align-items: center; gap: 7px; font: 500 13px/1 "Figtree", sans-serif; color: var(--muted); }
+.swatch { width: 10px; height: 10px; border-radius: 3px; }
+.day-close { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.what-side { display: flex; flex-direction: column; gap: 24px; }
+.what-side .card { background: var(--surface); }
+.what-side h3 { margin-bottom: 10px; }
+
+/* ── 4. Who sees what ────────────────────────────────────────────────────── */
+.roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; margin-top: 40px; }
+.role { background: var(--surface); border-top: 5px solid var(--role); display: flex; flex-direction: column; }
+.role-kicker { font: 600 13px/1 "Figtree", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--role-kicker); }
+.role-line { margin-top: 10px; font-family: "Caprasimo", Georgia, serif; font-size: 20px; line-height: 1.2; color: var(--ink); }
+.role .para { margin-top: 12px; font-size: 15px; }
+.role-list { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule-on-surface); display: flex; flex-direction: column; gap: 7px; }
+.role-list li { font: 500 15px/1.45 "Figtree", sans-serif; color: var(--body); padding-left: 20px; position: relative; }
+.role-list li::before { position: absolute; left: 0; }
+.role-list .yes::before { content: "✓"; color: var(--sage-deep); }
+.role-list .no::before { content: "—"; color: var(--faint); }
+.share-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+.share-chips li { background: var(--ground); border-radius: 999px; padding: 7px 13px; font: 600 13px/1 "Figtree", sans-serif; color: var(--sage-deep); }
+.outsiders {
+  margin-top: 22px; border: 1px solid var(--rule); border-radius: 18px;
+  padding: 16px 20px; font-size: 15px; line-height: 1.6; color: var(--muted);
+}
+.outsiders strong { color: var(--ink); font-weight: 700; }
+
+/* ── 5. On the phone ─────────────────────────────────────────────────────── */
+.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; margin-top: 44px; }
+.phone { display: flex; flex-direction: column; }
+.phone-bezel { background: var(--ink); border-radius: 38px; padding: 9px; box-shadow: 0 18px 40px rgba(32, 30, 29, .2); }
+.phone-screen { background: var(--surface); border-radius: 31px; overflow: hidden; height: 660px; display: flex; flex-direction: column; }
+
+/* ── 6. How it works ─────────────────────────────────────────────────────── */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; align-items: stretch; }
+.step { background: var(--surface); }
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 999px;
+  background: var(--accent); color: var(--ground);
+  font-family: "Caprasimo", Georgia, serif; font-size: 19px; margin-bottom: 14px;
+}
+.step h3 { margin-bottom: 10px; }
+
+/* ── 7. Privacy ──────────────────────────────────────────────────────────── */
+.privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+.band.ink .card { background: var(--ink-surface); }
+.band.ink .card h3 { font-size: clamp(19px, 2.2vw, 22px); margin-bottom: 8px; }
+.exception {
+  margin-top: 24px; padding: 18px 20px; border-radius: 18px;
+  border: 1px solid rgba(240, 230, 214, .16);
+  font-size: 15px; line-height: 1.65; color: var(--ink-muted); max-width: 60em;
+}
+.band.ink .cta-row { margin-top: 26px; }
+
+/* ── 8. Questions ────────────────────────────────────────────────────────── */
+.faq { display: flex; flex-direction: column; gap: 30px; margin-top: 34px; max-width: 46em; }
+.faq-item h3 { font-size: clamp(23px, 3.2vw, 30px); line-height: 1.12; margin-bottom: 12px; }
+
+/* ── 9. Footer ───────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--ground); border-top: 1px solid var(--rule);
+  padding: var(--pad-y) var(--pad-x) clamp(30px, 4vw, 44px);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.2fr .8fr; gap: 34px;
+  max-width: var(--measure); margin-inline: auto;
+}
+.footer-grid .para { margin-top: 16px; max-width: 34em; font-size: 15px; }
+.mail { font: 600 17px/1.5 "Figtree", sans-serif; }
+.footer-note { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font: 500 15px/1.5 "Figtree", sans-serif; color: var(--muted); }
+.footer-links a:hover { color: var(--accent-deep); }
+.footer-tag {
+  max-width: var(--measure); margin: clamp(30px, 4vw, 44px) auto 0;
+  padding-top: 20px; border-top: 1px solid var(--rule);
+  font-family: "Caprasimo", Georgia, serif; font-size: clamp(20px, 3vw, 26px); color: var(--faint);
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+@keyframes emoyPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.82); } }
+@keyframes emoyBreath { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+/* ═══ Responsive ═════════════════════════════════════════════════════════════
+   Two hard breakpoints; everything else is clamp(). 900px collapses structure,
+   560px handles the few things that need a second pass.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* The header is sticky only on desktop. On a phone it scrolls away, which is
+   what lets the nav disclosure open over the page without covering the section
+   it just jumped to — and it means scroll-margin-top only has to account for
+   the desktop case. */
+@media (min-width: 901px) {
+  .site-header {
+    position: sticky; top: 0; z-index: 30;
+    background: var(--ground); border-bottom: 1px solid transparent;
+  }
+  .band, .hero { scroll-margin-top: 92px; }
+}
+
+@media (max-width: 900px) {
+  .nav-desktop { display: none; }
+  .nav-mobile { display: block; }
+
+  /* Every multi-column grid becomes one column. The three role cards go 3 -> 1
+     rather than through an auto-fit 2 — they are a conceptual triad and an
+     orphan card on its own row reads as a mistake. */
+  .hero, .story-grid, .what-grid, .roles, .steps, .privacy-grid, .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero { gap: 34px; }
+  .story-grid { gap: 30px; }
+  .card-milestone { align-self: stretch; }
+  .blob-lg { width: min(300px, 74vw); height: min(300px, 74vw); right: -8px; }
+  .blob-sm { display: none; }
+
+  /* The phone mocks become a scroll-snap rail. NOT a transform: scale() — the
+     mocks' internals are built fluid (flex:1 rows, a 7-column calendar grid,
+     max-width caps), so narrowing the card reflows them and never touches the
+     11px type inside. 359px is the width the design actually renders at:
+     (1240 canvas - 96 padding - 68 gaps) / 3. Capping at 86vw leaves the next
+     card visibly peeking, which is the only thing that says it scrolls.
+
+     It also bounds the two elements the brief flags as the first to overflow:
+     all nine `white-space: nowrap` elements on this page live inside these
+     mocks, so a fixed card width contains them by construction. */
+  .phones {
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad-x);
+    margin-inline: calc(-1 * var(--pad-x));
+    padding: 0 var(--pad-x) 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .phone { flex: 0 0 min(359px, 86vw); scroll-snap-align: start; }
+  .phone-cap { order: -1; margin-bottom: 14px; }
+  .phone-cap p:first-child { margin-top: 0 !important; }
+}
+
+@media (max-width: 560px) {
+  /* Brand on its own row, nav beneath it. */
+  .nav { width: 100%; justify-content: space-between; }
+  .badge-slot { width: 100%; }
+  .cta-row .pill-lg { width: 100%; }
+  .day-card, .card { padding: 18px; }
+  .legend { gap: 8px 14px; }
+  .beta-banner { text-align: left; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────────
+   The clock script bails out on its own; these cover the CSS animations. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .lp *, .lp *::before, .lp *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
