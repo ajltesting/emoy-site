@@ -90,6 +90,22 @@ body:not(.lp) footer a:hover { color: var(--kicker); }
    the app, not the other way round.
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* Self-hosted, latin subset only. The page's privacy section says there are no
+   third-party trackers on it; loading the stylesheet from Google left one
+   external request on exactly that page. No cookies were involved, but the
+   request still left the visitor's browser, and the honest fix costs 40 KB.
+
+   Figtree is a VARIABLE font — one file covers 400-800, which is why there are
+   two files here and not six. */
+@font-face {
+  font-family: "Caprasimo"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/caprasimo-latin-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree"; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url("fonts/figtree-latin-var.woff2") format("woff2");
+}
+
 body.lp {
   /* Light ground */
   --ground: #f5ead8;
@@ -215,11 +231,12 @@ html { scroll-behavior: smooth; }
   border-radius: 999px; font: 600 14px/1 "Figtree", sans-serif;
   padding: 12px 20px; white-space: nowrap;
 }
-/* Cream on #c67139 measures 3.03:1 — the large-text threshold, not the normal
-   one. It is the design's explicit ruling for light mode (and it is what the
-   app ships); the alternative pairing it exists to prevent, cream on the night
-   accent #e09a63, is 1.97:1. Flagged rather than silently substituted. */
-.pill-solid { background: var(--accent); color: var(--ground); }
+/* The label is INK, not cream. Cream on #c67139 measures 3.03:1 — fine for
+   large display type, below AA for a 14px label, which is what these are. Ink
+   on the same fill is 4.60:1 and keeps the terracotta; it is also the pairing
+   the design system already specifies for a solid terracotta pill at night.
+   Hover keeps cream because #9c4f1d is dark enough for it (4.97:1). */
+.pill-solid { background: var(--accent); color: var(--ink); }
 .pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
 .pill-outline { border: 1.5px solid rgba(32, 30, 29, .22); color: var(--ink); }
 .pill-outline:hover { border-color: var(--accent); color: var(--accent-deep); }
