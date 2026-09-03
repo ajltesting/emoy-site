@@ -16,7 +16,7 @@
 </header>
 <main>
 <h1>EMOY — Privacy Policy</h1>
-<p><strong>Effective date:</strong> 25 August 2026 <strong>Contact:</strong> support@emoy.app</p>
+<p><strong>Effective date:</strong> 3 September 2026 <strong>Contact:</strong> support@emoy.app</p>
 <h2>Who we are</h2>
 <p>EMOY ("the app") is a shared care record for parents and caregivers. It is operated by the individual developer reachable at the contact address above.</p>
 <h2>The short version</h2>
@@ -33,14 +33,23 @@
 <h3>Photos and videos</h3>
 <ul><li>Photos and videos you add, and any milestone they are attached to.</li><li>These are stored in <strong>private storage</strong>. They are never public. They are served only through short-lived signed links to people you have shared with.</li></ul>
 <p><strong>Camera and microphone.</strong> If you record a video inside the app, we use the camera and the microphone to make that recording — the sound is part of the video you chose to record. The app never records audio on its own, in the background, or at any time other than a recording you started. If you only ever add photos from your existing library, neither is used at all.</p>
+<h3>If you use the AI assistant</h3>
+<p>The app is adding an assistant that answers questions about your own child's record. It does not exist yet; this section describes what will happen the first time you use it, so that nothing about it is a surprise.</p>
+<ul><li><strong>Your question</strong>, in your own words.</li><li><strong>A summary of your child's recent care data</strong>, assembled to answer it.</li></ul>
+<p>Both are sent to <strong>Anthropic</strong>, which runs the model. This is the most sensitive text in the app, so it is worth being exact about who can read it: <strong>only you.</strong> Not the other guardians in your household, not a caregiver, not anyone in a Circle. That is enforced by the database, not by a policy — a conversation is readable only by the account that wrote it.</p>
 <h3>Who you share with</h3>
 <ul><li>Your household and its members, and each member's role.</li><li>Your Circles, who is in them, and which categories each Circle can see.</li><li>Comments and reactions people leave on shared photos and milestones.</li><li>A record of anyone removed and blocked from a household or Circle, so they cannot rejoin with a shared invite code.</li></ul>
 <h3>Diagnostics</h3>
 <p>The app sends <strong>crash reports and performance data</strong> to Sentry so that failures on real devices can be found and fixed. This is deliberately configured to exclude personal information: identifying request data is disabled, session replay (screen recording) is <strong>not</strong> enabled, and crash reports are not associated with your account.</p>
+<h3>Notifications</h3>
+<p>Notifications are <strong>off until you turn them on</strong>, and there are two kinds.</p>
+<ul><li><strong>Reminders about your child's age</strong> are scheduled on your phone. Nothing is sent to a server and nobody else is told.</li><li><strong>Notifications about what someone else did</strong> — a photo added, a milestone logged, a reply to you — are sent from our server, because the thing being announced happened on somebody else's phone.</li></ul>
+<p>For the second kind we store a <strong>notification token</strong> for each device you turn them on for, and the <strong>time zone</strong> of that device, which is what lets an overnight notification be held until morning rather than waking you. Signing out removes the token for that phone.</p>
+<p>A notification is delivered through <strong>Expo's push service</strong> to Apple or Google, and it carries the text you would see on your lock screen — which names your child ("New photos of Louie") and who did the thing. It never carries a photo. Your child's first name therefore passes through those services in order to be displayed. That is how notifications work on both platforms; the alternative is a notification that cannot say what it is about.</p>
 <h3>Stored only on your own device</h3>
 <p>Your appearance preference (day/night), your measurement units, and whether you have seen the introductory walkthrough. These never leave your phone.</p>
 <h2>What the app does NOT do</h2>
-<ul><li>No advertising, and no advertising identifiers.</li><li>No analytics or behavioural tracking SDKs.</li><li>No selling, renting or sharing of personal information with third parties for their own purposes.</li><li>No access to your device's contacts or location, and no health data from Apple Health or Google Fit.</li><li>No use of your photos or your child's data to train machine-learning models.</li><li>Push notifications are not used. Milestone reminders are scheduled locally on your device and never involve a server.</li></ul>
+<ul><li>No advertising, and no advertising identifiers.</li><li>No analytics or behavioural tracking SDKs.</li><li>No selling, renting or sharing of personal information with third parties for their own purposes.</li><li>No access to your device's contacts or location, and no health data from Apple Health or Google Fit.</li><li>No use of your photos or your child's data to train machine-learning models.</li></ul>
 <h2>Why we process this data</h2>
 <p>To operate the service you asked for: to record and display your child's care, to synchronise it between the caregivers in your household in real time, to show the slices you have chosen to share with your Circle, and to keep the app working (diagnostics).</p>
 <p>Where GDPR applies, our lawful basis is <strong>performance of a contract</strong> for the core service, and <strong>legitimate interests</strong> for diagnostics. Health-related data (growth measurements, care records) is processed on the basis of your <strong>explicit consent</strong>, given by choosing to enter it, and you may withdraw that consent by deleting the data or your account.</p>
@@ -49,10 +58,12 @@
 <p>The adult account holder is responsible for what they enter and for whom they invite into a Circle.</p>
 <h2>Who else is involved</h2>
 <p>We use three service providers. They process data on our behalf, under their own security commitments, and are not permitted to use it for their own purposes.</p>
-<table><thead><tr><th>Provider</th><th>What they do</th><th>What they see</th></tr></thead><tbody><tr><td><strong>Supabase</strong></td><td>Database, authentication and file storage</td><td>All app data described above</td></tr><tr><td><strong>Sentry</strong></td><td>Crash and performance reporting</td><td>Diagnostic data only; no account or child data</td></tr><tr><td><strong>Expo (EAS)</strong></td><td>Delivers app updates</td><td>Technical request data needed to serve an update</td></tr></tbody></table>
+<table><thead><tr><th>Provider</th><th>What they do</th><th>What they see</th></tr></thead><tbody><tr><td><strong>Supabase</strong></td><td>Database, authentication and file storage</td><td>All app data described above</td></tr><tr><td><strong>Sentry</strong></td><td>Crash and performance reporting</td><td>Diagnostic data only; no account or child data</td></tr><tr><td><strong>Anthropic</strong></td><td>Answers your questions about your child's record</td><td>The question you ask, plus a summary of your child's recent care data</td></tr><tr><td><strong>Expo (EAS)</strong></td><td>Delivers app updates, and delivers notifications to Apple and Google</td><td>Technical request data needed to serve an update; for a notification, its token and the text shown on the lock screen</td></tr></tbody></table>
 <h2>Security</h2>
 <ul><li>All traffic between the app and our servers is encrypted in transit (HTTPS).</li><li>Data is encrypted at rest by our database and storage provider.</li><li>Access is enforced at the database level by row-level security rules, not only in the app: a household's records are readable only by that household's members, and a Circle member can read only the categories that Circle has been granted.</li><li>Photos and videos are held in a private bucket and are never publicly addressable.</li></ul>
 <p>No system is perfectly secure, and we cannot guarantee absolute security.</p>
+<p><strong>About Anthropic specifically.</strong> They do <strong>not</strong> train on what is sent — that is part of their standard commercial terms, and it is the reason they were chosen rather than a request we made. Prompts are <strong>not retained by default</strong>. There is one exception, and we would rather state it than leave it out: content flagged by their automated trust-and-safety systems may be kept for up to two years, and that is a floor we cannot waive on your behalf.</p>
+<p><strong>One thing account deletion cannot reach.</strong> Anything already sent to a service provider has left our systems. Deleting your account removes what we hold; it cannot reach back into somebody else's.</p>
 <h2>How long we keep it</h2>
 <p>We keep your data for as long as your account exists.</p>
 <ul><li><strong>Delete your account</strong> — Settings → Delete my account. This permanently deletes your login and removes your access. If you are the only member of a household, that household and everything in it is permanently deleted. If others remain, the shared record stays intact for them, with your entries no longer attributed to you.</li><li><strong>Leave a household or Circle</strong> — removes your access without deleting the shared record.</li></ul>
@@ -62,6 +73,10 @@
 <p>Most of this is available directly in the app: your data is visible to you, editable by you, and deletable by you. For anything else, contact us at the address above and we will respond within 30 days.</p>
 <h2>Changes</h2>
 <p>If this policy changes materially, we will update the effective date above and notify you in the app before the change takes effect.</p>
+<p><strong>3 September 2026.</strong> Two changes.</p>
+<p>Notifications about what someone else did — a photo added, a milestone logged, a reply — are now sent from our server, so they can reach you when the thing happened on somebody else's phone. The previous version of this policy said push notifications were not used, which was true when it was written. We now describe what is stored for them, what a notification carries, and that it passes through Expo, Apple and Google to be shown.</p>
+<p>We also added <strong>Anthropic</strong> to the list of services, ahead of an assistant that answers questions about your own child's record. The feature is not built. It is described here first so that the policy is already accurate the day it works, rather than catching up afterwards.</p>
+<p><strong>25 August 2026.</strong> First published.</p>
 </main>
 <footer>
   <a href="/">Home</a>
