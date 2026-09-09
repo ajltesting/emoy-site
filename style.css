@@ -134,8 +134,13 @@ body.lp {
      rail's negative margin — they have to agree or the rail will not bleed
      cleanly to the page edge. */
   --pad-x: clamp(20px, 5vw, 48px);
-  --pad-y: clamp(48px, 6vw, 80px);
+  --pad-y: clamp(44px, 4.6vw, 66px);
   --measure: 1144px;
+  /* Prose gets its own width, in CHARACTERS rather than pixels. --measure is
+     the GRID's width and is right for a three-card row; running a paragraph
+     to the same edge gave ~100-character lines, which is roughly a third
+     wider than anyone reads comfortably. */
+  --measure-prose: 58ch;
 
   margin: 0;
   background: var(--ground);
@@ -151,10 +156,10 @@ body.lp {
   color: var(--ink);
   margin: 0;
 }
-.lp h1 { font-size: clamp(40px, 9vw, 70px); line-height: 1; letter-spacing: -.5px; }
-.lp h2 { font-size: clamp(32px, 5.5vw, 46px); line-height: 1.08; text-wrap: pretty; max-width: 24em; }
-.lp h2.h2-village { font-size: clamp(34px, 6vw, 52px); line-height: 1.06; max-width: 22em; }
-.lp h3 { font-size: clamp(20px, 2.4vw, 24px); line-height: 1.2; }
+.lp h1 { font-size: clamp(38px, 7.6vw, 62px); line-height: 1.02; letter-spacing: -.5px; }
+.lp h2 { font-size: clamp(29px, 4.2vw, 40px); line-height: 1.12; text-wrap: pretty; max-width: 20em; }
+.lp h2.h2-village { font-size: clamp(31px, 4.8vw, 45px); line-height: 1.08; max-width: 18em; }
+.lp h3 { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.25; }
 .lp p { margin: 0; }
 .lp a { color: var(--accent-deep); text-decoration: none; }
 .lp a:hover { color: var(--accent); }
@@ -164,17 +169,25 @@ body.lp {
 html { scroll-behavior: smooth; }
 
 .kicker {
-  font: 600 13px/1 "Figtree", sans-serif; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--accent-deep); margin-bottom: 14px;
+  font: 600 12px/1 "Figtree", sans-serif; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent-deep); margin-bottom: 10px;
 }
-.lede { font-size: clamp(17px, 2vw, 20px); line-height: 1.6; color: var(--body); text-wrap: pretty; }
-.lede-wide { max-width: 46em; margin-top: 20px; }
-.para { font-size: 16px; line-height: 1.65; color: var(--body); text-wrap: pretty; }
+/* Body rises, headings come down: the ratio was ~2.9:1, which is why the
+   headings shouted and the copy whispered. Now ~2.2:1. */
+.lede { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; color: var(--body); text-wrap: pretty; max-width: var(--measure-prose); }
+.lede-wide { max-width: var(--measure-prose); margin-top: 18px; }
+.para { font-size: clamp(16px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body); text-wrap: pretty; max-width: var(--measure-prose); }
 .para + .para { margin-top: 12px; }
 
 /* ── Bands ───────────────────────────────────────────────────────────────── */
 .band { padding: var(--pad-y) var(--pad-x); scroll-margin-top: 24px; }
 .band > * { max-width: var(--measure); margin-inline: auto; }
+/* AFTER the rule above, deliberately. `.band > *` and `.lede-wide` have the
+   same specificity, so whichever is written last wins — and the grid measure
+   was silently clobbering the prose measure, which is why the paragraphs kept
+   running to ~100 characters however the prose rules were tuned. Prose is
+   re-narrowed here, where source order guarantees it sticks. */
+.band > .lede, .band > .para, .band > .lede-wide { max-width: var(--measure-prose); margin-inline: 0; }
 .band.ink { background: var(--ink-ground); }
 .band.ink h2, .band.ink h3 { color: var(--ink-cream); }
 .band.ink .lede, .band.ink .para { color: var(--ink-secondary); }
