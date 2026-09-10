@@ -276,9 +276,13 @@ html { scroll-behavior: smooth; }
    Hover keeps cream because #9c4f1d is dark enough for it (4.97:1). */
 .pill-solid { background: var(--accent); color: var(--ink); }
 .pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
-.pill-outline { border: 1.5px solid rgba(32, 30, 29, .22); color: var(--ink); }
+/* .22 composited on the cream ground is 1.56:1 — a UI boundary needs 3:1, and
+   Organic's own guidance says not to draw hairline-only geometry. .50 is the
+   first alpha that passes, at 3.12:1. The label was never the problem: it is
+   already 600 weight at 13.95:1. */
+.pill-outline { border: 1.5px solid rgba(32, 30, 29, .50); color: var(--ink); }
 .pill-outline:hover { border-color: var(--accent); color: var(--accent-deep); }
-.pill-outline-ink { border: 1.5px solid rgba(240, 230, 214, .3); color: var(--ink-cream); padding: 15px 24px; font-size: 15px; }
+.pill-outline-ink { border: 1.5px solid rgba(240, 230, 214, .40); color: var(--ink-cream); padding: 15px 24px; font-size: 15px; }  /* .30 was 2.42:1 on the ink ground; .40 is 3.28:1 */
 .pill-outline-ink:hover { border-color: var(--ink-accent); color: var(--ink-accent); }
 .pill-lg { font-size: clamp(15px, 1.6vw, 17px); padding: 17px 26px; }
 .pill-sm { font-size: 14px; padding: 13px 20px; }
@@ -579,18 +583,60 @@ html { scroll-behavior: smooth; }
 }
 
 /* ── /invite ─────────────────────────────────────────────────────────────
-   A single short band, so it needs a little more air above than a section
-   that follows another one. Everything else reuses the landing page's own
-   classes rather than a parallel set. */
-.lp .invite-band { padding-top: clamp(var(--space-8), 6vw, 72px); }
-.lp .invite-band .lede { margin-top: var(--space-4); }
-.lp .invite-note { margin-top: var(--space-4); color: var(--muted); font-size: 15px; }
-.lp .invite-facts {
-  margin-top: var(--space-8); max-width: var(--measure-prose);
-  display: flex; flex-direction: column; gap: var(--space-4);
+   A SHORT, single-band page, and it cannot borrow the landing page's rhythm.
+   Measured before tuning: 44% of the desktop page was blank, against 28% for
+   index — but the total was never the problem. index spends its whitespace on
+   FOUR large deliberate breaks between long sections (128/184/133px); invite
+   had EIGHT medium ones (28/74/43/32/35/24/80/59) strung through what should
+   read as a single block, which is what "gaps everywhere" actually looks like.
+   So: internals tight enough to read as one unit, and one real break before
+   the footer. .band's 72px padding and .site-footer's 66px stacked into a
+   142px void here; both are overridden. */
+.lp-invite .invite-band {
+  padding-top: clamp(var(--space-4), 2vw, var(--space-6));
+  padding-bottom: var(--space-6);
 }
-.lp .invite-facts li {
-  padding-left: var(--space-4); border-left: 3px solid var(--rule);
-  font-size: 16px; line-height: 1.62; color: var(--body);
+.lp-invite h1 { font-size: clamp(31px, 4.4vw, 46px); line-height: 1.06; }
+.lp-invite .kicker { margin-bottom: var(--space-2); }
+.lp-invite .invite-band .lede { margin-top: var(--space-3); }
+.lp-invite .cta-row { margin-top: var(--space-4); gap: var(--space-2); }
+.lp-invite .invite-note { margin-top: var(--space-3); color: var(--muted); font-size: 15px; }
+.lp-invite .invite-facts {
+  margin-top: var(--space-6); max-width: var(--measure-prose);
+  display: flex; flex-direction: column; gap: var(--space-3);
 }
-.lp .invite-facts strong { color: var(--ink); font-weight: 700; }
+.lp-invite .invite-facts li {
+  padding-left: var(--space-3); border-left: 3px solid var(--rule);
+  font-size: 16px; line-height: 1.55; color: var(--body);
+}
+.lp-invite .invite-facts strong { color: var(--ink); font-weight: 700; }
+
+/* The footer's own top padding is generous because a long page has earned a
+   rest by the time it arrives. Here it lands directly under the only band. */
+.lp-invite .site-footer { padding-top: var(--space-6); }
+.lp-invite .footer-grid { gap: var(--space-4); }
+.lp-invite .footer-tag { margin-top: var(--space-4); padding-top: var(--space-3); }
+
+/* Two columns on a wide screen. Measured before doing this: the body content
+   used 27-47% of a 1440px viewport and left 700-1000px dead on the right,
+   while the header spanned 79% and the footer 64% — which is what made the
+   middle look hollow. The band container was already --measure (1144px); only
+   the content inside it was narrow. Prose keeps its own measure inside the
+   left column, so line length does not grow with the layout.
+   The collapse is qualified `.lp-invite` to match the base rule's specificity
+   — an unqualified `.invite-grid` here would lose, exactly as `.steps` did. */
+.lp-invite .invite-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  align-items: start;
+}
+.lp-invite .invite-lead .lede { max-width: 34em; }
+.lp-invite .invite-side { padding-top: var(--space-2); }
+.lp-invite .invite-facts { margin-top: 0; max-width: none; }
+.lp-invite .invite-side .invite-note { max-width: 34em; }
+
+@media (max-width: 900px) {
+  .lp-invite .invite-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+  .lp-invite .invite-side { padding-top: 0; }
+}
