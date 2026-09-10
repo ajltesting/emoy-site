@@ -471,6 +471,15 @@ html { scroll-behavior: smooth; }
 @keyframes emoyPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.82); } }
 @keyframes emoyBreath { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 
+/* SPECIFICITY, BOTH DIRECTIONS. `.lp p` and `.lp ul` (0,1,1) silently kill a
+   bare single-class rule, which is why `.legend`, `.lede-wide` and `.steps`
+   each declared a value that never rendered. Qualifying them as `.lp .x`
+   (0,2,0) fixed that — and then out-specified their own media-query overrides,
+   which are only (0,1,0), because a media query adds NO specificity. `.steps`
+   stopped collapsing to one column on a phone as a direct result. Any rule
+   qualified with `.lp ` must be qualified in its media queries too.
+   ═══════════════════════════════════════════════════════════════════════ */
+
 /* ═══ Responsive ═════════════════════════════════════════════════════════════
    Two hard breakpoints; everything else is clamp(). 900px collapses structure,
    560px handles the few things that need a second pass.
@@ -495,7 +504,7 @@ html { scroll-behavior: smooth; }
   /* Every multi-column grid becomes one column. The three role cards go 3 -> 1
      rather than through an auto-fit 2 — they are a conceptual triad and an
      orphan card on its own row reads as a mistake. */
-  .hero, .story-grid, .what-grid, .roles, .steps, .privacy-grid, .footer-grid {
+  .hero, .story-grid, .what-grid, .roles, .lp .steps, .privacy-grid, .footer-grid {
     grid-template-columns: 1fr;
   }
   .hero { gap: 34px; }
@@ -554,7 +563,7 @@ html { scroll-behavior: smooth; }
   .badge-slot { width: 100%; }
   .cta-row .pill-lg { width: 100%; }
   .day-card, .card { padding: 18px; }
-  .legend { gap: 8px 14px; }
+  .lp .legend { gap: 8px 14px; }
   .beta-banner { text-align: left; }
 }
 
