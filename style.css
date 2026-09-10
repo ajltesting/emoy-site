@@ -577,3 +577,20 @@ html { scroll-behavior: smooth; }
     transition-duration: .001ms !important;
   }
 }
+
+/* ── /invite ─────────────────────────────────────────────────────────────
+   A single short band, so it needs a little more air above than a section
+   that follows another one. Everything else reuses the landing page's own
+   classes rather than a parallel set. */
+.lp .invite-band { padding-top: clamp(var(--space-8), 6vw, 72px); }
+.lp .invite-band .lede { margin-top: var(--space-4); }
+.lp .invite-note { margin-top: var(--space-4); color: var(--muted); font-size: 15px; }
+.lp .invite-facts {
+  margin-top: var(--space-8); max-width: var(--measure-prose);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.lp .invite-facts li {
+  padding-left: var(--space-4); border-left: 3px solid var(--rule);
+  font-size: 16px; line-height: 1.62; color: var(--body);
+}
+.lp .invite-facts strong { color: var(--ink); font-weight: 700; }
