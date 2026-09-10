@@ -266,7 +266,7 @@ html { scroll-behavior: smooth; }
 /* ── Pills ───────────────────────────────────────────────────────────────── */
 .pill {
   display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 999px; font: 600 14px/1 "Figtree", sans-serif;
+  border-radius: 999px; font: 700 14px/1 "Figtree", sans-serif;
   padding: 12px 20px; white-space: nowrap;
 }
 /* The label is INK, not cream. Cream on #c67139 measures 3.03:1 — fine for
