@@ -10,6 +10,20 @@
   --kicker: #9c4f1d;
   --accent: #c67139;
   --hairline: #e0d2b8;
+
+  /* Organic's space scale, which src/lib/theme.ts already carries value for
+     value: 4.4 x {1,2,3,4,6,8}. The site had adopted Organic's COLOURS and
+     nothing else, so every gap on the page was chosen per section. Named by
+     the multiplier so the series is legible and so --space-10 reads as a
+     member of it rather than another one-off: the two card grids need a step
+     above 35.2, and 44 is the scale continued by its own ratio. */
+  --space-1: 4.4px;
+  --space-2: 8.8px;
+  --space-3: 13.2px;
+  --space-4: 17.6px;
+  --space-6: 26.4px;
+  --space-8: 35.2px;
+  --space-10: 44px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -156,10 +170,19 @@ body.lp {
   color: var(--ink);
   margin: 0;
 }
-.lp h1 { font-size: clamp(38px, 7.6vw, 62px); line-height: 1.02; letter-spacing: -.5px; }
-.lp h2 { font-size: clamp(29px, 4.2vw, 40px); line-height: 1.12; text-wrap: pretty; max-width: 20em; }
+/* SPACE AFTER A HEADING TRACKS THE HEADING, at about 0.43 of its own size —
+   the ratio h1 already used (26 under 62px) and the only one on this page that
+   looks deliberate. It was inverted before: h1 got 26, h3 got 8-12, and h2 got
+   NOTHING in five places, so the largest type had the least air. And every
+   value was a fixed px sitting under fluid type, so a 38px h1 on mobile got
+   the same 26 as a 62px one. Both ends of each clamp are scale steps, so the
+   space is fluid the way the type is. */
+.lp h1 { font-size: clamp(38px, 7.6vw, 62px); line-height: 1.02; letter-spacing: -.5px;
+         margin-bottom: clamp(var(--space-4), 2.1vw, var(--space-6)); }
+.lp h2 { font-size: clamp(29px, 4.2vw, 40px); line-height: 1.12; text-wrap: pretty; max-width: 20em;
+         margin-bottom: clamp(var(--space-3), 1.4vw, var(--space-4)); }
 .lp h2.h2-village { font-size: clamp(31px, 4.8vw, 45px); line-height: 1.08; max-width: 18em; }
-.lp h3 { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.25; }
+.lp h3 { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.25; margin-bottom: var(--space-2); }
 .lp p { margin: 0; }
 .lp a { color: var(--accent-deep); text-decoration: none; }
 .lp a:hover { color: var(--accent); }
@@ -175,7 +198,9 @@ html { scroll-behavior: smooth; }
 /* Body rises, headings come down: the ratio was ~2.9:1, which is why the
    headings shouted and the copy whispered. Now ~2.2:1. */
 .lede { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; color: var(--body); text-wrap: pretty; max-width: var(--measure-prose); }
-.lede-wide { max-width: var(--measure-prose); margin-top: 18px; }
+/* Its margin-top was DEAD — (0,1,0) against `.lp p` (0,1,1), so it never
+   rendered — and all three uses follow an h2, which now owns that gap. */
+.lede-wide { max-width: var(--measure-prose); }
 .para { font-size: clamp(16px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body); text-wrap: pretty; max-width: var(--measure-prose); }
 .para + .para { margin-top: 12px; }
 
@@ -265,7 +290,7 @@ html { scroll-behavior: smooth; }
   padding: clamp(36px, 5vw, 56px) var(--pad-x) clamp(48px, 7vw, 72px);
   max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
 }
-.hero .lede { margin-top: 26px; max-width: 30em; }
+.hero .lede { max-width: 30em; }   /* the 26px moved onto h1, which owns it */
 .badges { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; margin-top: 30px; }
 .badge-slot {
   width: 178px; min-height: 56px; border: 1.5px dashed rgba(32, 30, 29, .28);
@@ -330,10 +355,17 @@ html { scroll-behavior: smooth; }
 .day-meta { font: 600 11px/1.3 "Figtree", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .rows { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
 .row {
-  position: relative; display: flex; align-items: center; gap: 12px;
+  position: relative; display: flex; align-items: center; gap: 10px;
   background: var(--tile-bg); border-radius: 14px; padding: 11px 14px;
 }
 .rail { align-self: stretch; flex: 0 0 4px; border-radius: 999px; background: var(--rail); }
+/* A FIXED SLOT, not an inline icon. The four glyphs have different natural
+   widths, so a shared slot keeps every row's text starting on the same line —
+   the same reason EntryCard.tsx uses one in the app. The colour is --tile-fg
+   (the app's categoryTextColor), deliberately NOT the rail colour: the rail is
+   the saturated identity, the glyph has to stay legible on the tint. */
+.row-icon { flex: 0 0 19px; display: flex; align-items: center; justify-content: center; color: var(--tile-fg); }
+.row-glyph { width: 17px; height: 17px; display: block; }
 .row-main { flex: 1; min-width: 0; }
 .row-time { display: block; font: 500 15px/1.35 "Figtree", sans-serif; color: var(--ink); }
 .row-qual { display: block; font: 400 12px/1.4 "Figtree", sans-serif; color: var(--muted); }
@@ -342,13 +374,17 @@ html { scroll-behavior: smooth; }
 .chip { background: rgba(255, 255, 255, .55); border-radius: 999px; padding: 5px 10px; font: 600 11px/1 "Figtree", sans-serif; color: var(--tile-fg); }
 .row-live { box-shadow: inset 0 0 0 1.5px rgba(140, 73, 26, .35); }
 .row-live .rail { animation: emoyPulse 2.6s ease-in-out infinite; }
-.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule-on-surface); }
+/* `.lp ul` (0,1,1) out-specifies a bare `.legend` (0,1,0) and zeroes margin
+   AND padding whatever the source order — which is why the 18px/16px written
+   here originally never rendered and the legend sat flush against the last
+   row. Qualified with .lp so it actually wins. Same class of collision as the
+   `.band > *` one further up; specificity, not order, is the trap here. */
+.lp .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule-on-surface); }
 .legend li { display: flex; align-items: center; gap: 7px; font: 500 13px/1 "Figtree", sans-serif; color: var(--muted); }
-.swatch { width: 10px; height: 10px; border-radius: 3px; }
+.swatch { width: 9px; height: 9px; border-radius: 999px; }   /* round, as the app draws them */
 .day-close { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted); }
 .what-side { display: flex; flex-direction: column; gap: 24px; }
 .what-side .card { background: var(--surface); }
-.what-side h3 { margin-bottom: 10px; }
 
 /* ── 4. Who sees what ────────────────────────────────────────────────────── */
 .roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; margin-top: 40px; }
@@ -370,13 +406,22 @@ html { scroll-behavior: smooth; }
 .outsiders strong { color: var(--ink); font-weight: 700; }
 
 /* ── 5. On the phone ─────────────────────────────────────────────────────── */
-.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; margin-top: 44px; }
+.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; margin-top: var(--space-10); }
 .phone { display: flex; flex-direction: column; }
 .phone-bezel { background: var(--ink); border-radius: 38px; padding: 9px; box-shadow: 0 18px 40px rgba(32, 30, 29, .2); }
-.phone-screen { background: var(--surface); border-radius: 31px; overflow: hidden; height: 660px; display: flex; flex-direction: column; }
+/* Real screenshots now, not a hand-built mock — so the screen is sized by the
+   image's own aspect (760x1644) rather than the old fixed 660px, which existed
+   to bound the fake UI and would crop a real capture. */
+.phone-screen { background: var(--surface); border-radius: 31px; overflow: hidden; display: block; }
+.phone-shot { display: block; width: 100%; height: auto; }
 
 /* ── 6. How it works ─────────────────────────────────────────────────────── */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; align-items: stretch; }
+/* `.lp` PREFIX IS LOAD-BEARING: bare `.steps` is (0,1,0) and loses to
+   `.lp ul, .lp ol` (0,1,1), so the 40px here computed to 0 and never once
+   rendered. Same trap as `.legend`, third instance on this file. Revived at
+   --space-10 to match .phones, the structurally identical card grid. */
+.lp .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+             margin-top: var(--space-10); align-items: stretch; }
 .step { background: var(--surface); }
 .step-num {
   display: inline-flex; align-items: center; justify-content: center;
@@ -384,12 +429,11 @@ html { scroll-behavior: smooth; }
   background: var(--accent); color: var(--ground);
   font-family: "Caprasimo", Georgia, serif; font-size: 19px; margin-bottom: 14px;
 }
-.step h3 { margin-bottom: 10px; }
 
 /* ── 7. Privacy ──────────────────────────────────────────────────────────── */
 .privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
 .band.ink .card { background: var(--ink-surface); }
-.band.ink .card h3 { font-size: clamp(19px, 2.2vw, 22px); margin-bottom: 8px; }
+.band.ink .card h3 { font-size: clamp(19px, 2.2vw, 22px); }
 .exception {
   margin-top: 24px; padding: 18px 20px; border-radius: 18px;
   border: 1px solid rgba(240, 230, 214, .16);
@@ -399,7 +443,8 @@ html { scroll-behavior: smooth; }
 
 /* ── 8. Questions ────────────────────────────────────────────────────────── */
 .faq { display: flex; flex-direction: column; gap: 30px; margin-top: 34px; max-width: 46em; }
-.faq-item h3 { font-size: clamp(23px, 3.2vw, 30px); line-height: 1.12; margin-bottom: 12px; }
+.faq-item h3 { font-size: clamp(23px, 3.2vw, 30px); line-height: 1.12;
+               margin-bottom: clamp(var(--space-2), 1.05vw, var(--space-3)); }
 
 /* ── 9. Footer ───────────────────────────────────────────────────────────── */
 .site-footer {
@@ -459,16 +504,25 @@ html { scroll-behavior: smooth; }
   .blob-lg { width: min(300px, 74vw); height: min(300px, 74vw); right: -8px; }
   .blob-sm { display: none; }
 
-  /* The phone mocks become a scroll-snap rail. NOT a transform: scale() — the
-     mocks' internals are built fluid (flex:1 rows, a 7-column calendar grid,
-     max-width caps), so narrowing the card reflows them and never touches the
-     11px type inside. 359px is the width the design actually renders at:
-     (1240 canvas - 96 padding - 68 gaps) / 3. Capping at 86vw leaves the next
-     card visibly peeking, which is the only thing that says it scrolls.
+  /* The phones become a scroll-snap rail. 359px is the width the design
+     actually renders at: (1240 canvas - 96 padding - 68 gaps) / 3. Capping at
+     86vw leaves the next card visibly peeking, which is the only thing that
+     says it scrolls.
 
-     It also bounds the two elements the brief flags as the first to overflow:
-     all nine `white-space: nowrap` elements on this page live inside these
-     mocks, so a fixed card width contains them by construction. */
+     THIS COMMENT USED TO ARGUE FROM THE HAND-BUILT MOCKS, and they are gone —
+     replaced by real screenshots, so both of its reasons have inverted rather
+     than merely expired. It said the internals reflow when the card narrows
+     and so never touch the 11px type inside; a raster shot does not reflow at
+     all, it scales, and there is no live type left to protect. It also said
+     the card width contained all nine `white-space: nowrap` elements "by
+     construction"; index.html carried nine on master and carries none here,
+     because every one of them lived inside a mock.
+
+     What survives is the rule itself, for a simpler reason: the source is
+     760x1644 and the widest this card ever renders is 359px, so the image is
+     downscaling by better than half at every width and has resolution to
+     spare. The remaining nowrap declarations are all in style.css (the nav
+     summary, a pill, a card meta) and none of them sit in this rail. */
   .phones {
     display: flex; gap: 20px; overflow-x: auto;
     scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad-x);
