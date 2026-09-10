@@ -269,21 +269,44 @@ html { scroll-behavior: smooth; }
   border-radius: 999px; font: 700 14px/1 "Figtree", sans-serif;
   padding: 12px 20px; white-space: nowrap;
 }
-/* The label is INK, not cream. Cream on #c67139 measures 3.03:1 — fine for
-   large display type, below AA for a 14px label, which is what these are. Ink
-   on the same fill is 4.60:1 and keeps the terracotta; it is also the pairing
-   the design system already specifies for a solid terracotta pill at night.
+/* EVERY PILL COLOUR RULE IS QUALIFIED `.lp `, AND THAT IS LOAD-BEARING.
+   `.lp a` is (0,1,1) and a bare `.pill-solid` is (0,1,0), so for as long as
+   these rules went unqualified NONE of their colours applied: every pill
+   label rendered as --accent-deep inherited from `.lp a`. On the solid pill
+   that is #9c4f1d on #c67139 — terracotta on terracotta, 1.64:1 — which is
+   why the buttons were hard to read, and why every contrast figure argued
+   about before 2026-09-10 described a value that was never on screen.
+   Confirmed from getComputedStyle, not from reading the cascade. */
+/* The label is a TONED NEAR-BLACK, deliberately not --ink and deliberately not
+   pure black. On the #c67139 fill, --ink (#201e1d) measures 4.60:1 — it passes
+   AA and still read as hard work, because thin dark type on a saturated
+   mid-tone loses its edges before the ratio says it should. #0e0c0b is 5.41:1,
+   about two thirds of the total headroom, while keeping the same warm channel
+   spread as --ink so it stays in the family. Pure black would reach 5.82:1 and
+   is the ceiling, but Organic asks for subtly-toned blacks and this would have
+   been the only #000 on the site.
+
+   The fill is the binding constraint, and it was tested rather than assumed.
+   Nothing colourful survives on it: Organic's own darkest terracotta step
+   (#402310) is 3.97:1 and the darkest neutral (#2e2b25) is 3.91:1, both
+   failing. A cream label — the conventional knockout, and the better-looking
+   option — is 3.03:1 here and does not reach AA until the fill darkens to
+   #a45522, which is 81% of the way to --accent-deep. Light-on-dark was tried
+   at --accent-deep and reverted: 4.97:1, and too heavy and brown for a warm
+   page. None of these labels reach WCAG's large-text size, so the 3:1
+   allowance never applies to any of them.
+
    Hover keeps cream because #9c4f1d is dark enough for it (4.97:1). */
-.pill-solid { background: var(--accent); color: var(--ink); }
-.pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
+.lp .pill-solid { background: var(--accent); color: #0e0c0b; }
+.lp .pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
 /* .22 composited on the cream ground is 1.56:1 — a UI boundary needs 3:1, and
    Organic's own guidance says not to draw hairline-only geometry. .50 is the
    first alpha that passes, at 3.12:1. The label was never the problem: it is
    already 600 weight at 13.95:1. */
-.pill-outline { border: 1.5px solid rgba(32, 30, 29, .50); color: var(--ink); }
-.pill-outline:hover { border-color: var(--accent); color: var(--accent-deep); }
-.pill-outline-ink { border: 1.5px solid rgba(240, 230, 214, .40); color: var(--ink-cream); padding: 15px 24px; font-size: 15px; }  /* .30 was 2.42:1 on the ink ground; .40 is 3.28:1 */
-.pill-outline-ink:hover { border-color: var(--ink-accent); color: var(--ink-accent); }
+.lp .pill-outline { border: 1.5px solid rgba(32, 30, 29, .50); color: var(--ink); }
+.lp .pill-outline:hover { border-color: var(--accent); color: var(--accent-deep); }
+.lp .pill-outline-ink { border: 1.5px solid rgba(240, 230, 214, .40); color: var(--ink-cream); padding: 15px 24px; font-size: 15px; }  /* .30 was 2.42:1 on the ink ground; .40 is 3.28:1 */
+.lp .pill-outline-ink:hover { border-color: var(--ink-accent); color: var(--ink-accent); }
 .pill-lg { font-size: clamp(15px, 1.6vw, 17px); padding: 17px 26px; }
 .pill-sm { font-size: 14px; padding: 13px 20px; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
