@@ -532,7 +532,19 @@ html { scroll-behavior: smooth; }
     scrollbar-width: thin;
   }
   .phone { flex: 0 0 min(359px, 86vw); scroll-snap-align: start; }
-  .phone-cap { order: -1; margin-bottom: 14px; }
+  /* THE CAPTION ABSORBS THE SLACK, so the bezels line up. Moving the caption
+     above the phone here means an unequal number of caption lines pushes each
+     bezel to a different top — the grandparent copy wraps one line shorter, so
+     its phone sat 24px high against the other two, which is visible because
+     the rail shows the next card peeking. .phones stretches every card to the
+     tallest, and without this the leftover height pools at the BOTTOM, below
+     the bezel, where it does nothing. Growing the caption instead puts that
+     space between the caption text and the bezel: caption headings stay
+     aligned at the top, bezels align, and only the gap between them varies —
+     which is invisible when you can see one card at a time. Desktop is
+     unaffected: the caption is below the bezel there, so all three already
+     start at the top of their grid cell. */
+  .phone-cap { order: -1; margin-bottom: 14px; flex-grow: 1; }
   .phone-cap p:first-child { margin-top: 0 !important; }
 }
 
