@@ -269,13 +269,24 @@ html { scroll-behavior: smooth; }
   border-radius: 999px; font: 600 14px/1 "Figtree", sans-serif;
   padding: 12px 20px; white-space: nowrap;
 }
-/* The label is INK, not cream. Cream on #c67139 measures 3.03:1 — fine for
-   large display type, below AA for a 14px label, which is what these are. Ink
-   on the same fill is 4.60:1 and keeps the terracotta; it is also the pairing
-   the design system already specifies for a solid terracotta pill at night.
-   Hover keeps cream because #9c4f1d is dark enough for it (4.97:1). */
-.pill-solid { background: var(--accent); color: var(--ink); }
-.pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
+/* LIGHT ON DARK, changed 2026-09-10. This was ink on #c67139, which measures
+   4.60:1 — it clears AA, and it still read as muddy, because dark type on a
+   saturated mid-tone loses its edges long before the ratio says it should.
+   The number passing is not the same as the label being easy to read.
+
+   Cream on #9c4f1d is 4.97:1 and, more to the point, light-on-dark keeps its
+   crispness at 14px where dark-on-mid-tone does not. It was already this
+   file's own hover pairing, so it is proven here rather than new.
+
+   Measured alternatives, for anyone tempted to revisit: cream on the base
+   accent is 3.03:1 and white on it 3.61:1 (both fail); ink on accent-deep is
+   2.81:1 (worse); white on accent-deep reaches 5.92:1 but pure white is
+   off-brand — Organic calls for subtly-toned whites, and cream is ours.
+
+   Hover moves one step down the accent ramp to #643312 (8.72:1), so the
+   press still darkens now that the resting state is already dark. */
+.pill-solid { background: var(--accent-deep); color: var(--ground); }
+.pill-solid:hover { background: #643312; color: var(--ground); }
 /* .22 composited on the cream ground is 1.56:1 — a UI boundary needs 3:1, and
    Organic's own guidance says not to draw hairline-only geometry. .50 is the
    first alpha that passes, at 3.12:1. The label was never the problem: it is
