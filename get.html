@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get EMOY</title>
+<meta name="description" content="EMOY — one shared baby record every caregiver writes to. You choose what leaves the household.">
+<link rel="canonical" href="https://emoy.app/get">
+
+<!-- link previews: this URL gets pasted into messages a lot -->
+<meta property="og:title" content="Get EMOY">
+<meta property="og:description" content="One shared baby record every caregiver writes to. You choose what leaves the household.">
+<meta property="og:image" content="https://emoy.app/mark.png">
+<meta property="og:url" content="https://emoy.app/get">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icon.png">
+<!-- Caprasimo + Figtree, SELF-HOSTED. The source draft of this page loaded them
+     from fonts.googleapis.com, which would have put a third-party request on the
+     one page that says "No third-party trackers" four lines further down. That
+     trade was already made once for the landing page — see the @font-face
+     comment in style.css — and the answer is the same here. -->
+<link rel="preload" href="fonts/figtree-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/caprasimo-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+/* This page is deliberately chrome-free: no beta banner, no site header, no
+   footer grid. It is a link target pasted into messages, and everything on it
+   is either a store link or a reason to tap one. So it takes style.css for the
+   self-hosted fonts and the shared base only, and carries its own layout.
+
+   body.lp is required, not decorative: style.css's legal-page layer is scoped
+   to body:not(.lp) and carries a prefers-color-scheme dark mode. Without .lp a
+   dark-mode visitor would get ink tokens under this page's cream design.
+
+   Colour values are this page's own rather than var(--accent) and friends. They
+   are the same hexes the .lp tokens hold today; keeping them literal is what
+   the page was designed against, and it keeps a future token change from
+   quietly restyling a conversion page nobody re-checks.
+
+   The selector is body.lp.lp-get, NOT .lp-get: --ink, --body, --rule and the
+   two sage tokens are also declared by body.lp (0,1,1) on this same element, so
+   a bare .lp-get (0,1,0) loses every one of them. Caught by reading
+   getComputedStyle out of the live page — --rule had already silently become
+   the site's #ddcfb6 hairline instead of this page's translucent one. */
+body.lp.lp-get{
+  --cream:#f5ead8; --sand:#ebddc5; --ink:#201e1d; --body:#3c3733;
+  --terra:#c67139; --terra-deep:#9c4f1d; --sage:#7a8a5e; --sage-deep:#5c6b45;
+  /* The label on a solid terracotta button. NOT --cream, which measures
+     3.03:1 on this fill — below AA, on the one element the page exists to get
+     tapped. This is the site's own answer: .pill-solid in style.css puts this
+     same near-black on this same terracotta, for this same reason, and it
+     measures 5.41:1. Whichever button is promoted uses it. */
+  --terra-label:#0e0c0b;
+  --rule:rgba(60,55,51,.16);
+}
+body.lp-get{
+  background:var(--cream); color:var(--body);
+  font:400 17px/1.6 "Figtree",-apple-system,"Segoe UI",sans-serif;
+  min-height:100dvh; display:flex; align-items:center; justify-content:center;
+  padding:40px 22px; -webkit-font-smoothing:antialiased;
+}
+.lp-get main{width:100%; max-width:430px; display:flex; flex-direction:column; gap:30px}
+
+.lp-get .mark{width:66px;height:66px;display:block}
+/* margin-bottom:0 overrides .lp h1's heading gap — the stack's flex gap owns
+   the spacing on this page, and the two would otherwise add up. */
+.lp-get h1{
+  font-family:Caprasimo,Georgia,serif; font-weight:400;
+  font-size:clamp(2.1rem,8vw,2.7rem); line-height:1.04;
+  letter-spacing:-.012em; color:var(--ink); text-wrap:balance; margin-bottom:0;
+}
+.lp-get .sub{font-size:1.05rem; color:var(--body); max-width:34ch}
+
+.lp-get .actions{display:flex; flex-direction:column; gap:12px}
+.lp-get a.btn{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:19px 24px; border-radius:18px; text-decoration:none;
+  font-weight:700; font-size:1.05rem; letter-spacing:-.01em;
+  transition:transform .12s ease, filter .12s ease;
+}
+.lp-get a.btn:active{transform:scale(.985)}
+.lp-get a.btn:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
+.lp-get a.btn .arrow{font-weight:400; opacity:.75}
+
+.lp-get a.primary{background:var(--terra); color:var(--terra-label)}
+.lp-get a.primary:hover{filter:brightness(1.05); color:var(--terra-label)}
+.lp-get a.secondary{background:transparent; color:var(--ink); border:1px solid var(--rule)}
+.lp-get a.secondary:hover{background:var(--sand); color:var(--ink)}
+
+.lp-get .note{
+  font-size:.92rem; color:var(--sage-deep); font-weight:600;
+  display:flex; gap:9px; align-items:flex-start;
+}
+.lp-get .note .dot{
+  width:7px;height:7px;border-radius:99px;background:var(--sage);
+  flex:none;margin-top:.52em;
+}
+
+.lp-get .claims{
+  border-top:1px solid var(--rule); padding-top:22px;
+  display:flex; flex-direction:column; gap:7px;
+}
+.lp-get .claims p{font-size:.93rem; color:var(--body)}
+.lp-get .claims b{
+  display:block; font-size:.68rem; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--sage-deep); margin-bottom:6px;
+}
+.lp-get footer{font-size:.88rem}
+.lp-get footer a{color:var(--terra-deep); text-underline-offset:3px; text-decoration:underline}
+
+/* platform swap. Default = iOS primary (it's the live one).
+   JS only promotes Android when we detect Android, so with JS off
+   or on a bot, everyone still gets both working links. */
+.lp-get.android #btn-ios{background:transparent;color:var(--ink);border:1px solid var(--rule);order:2}
+.lp-get.android #btn-ios:hover{background:var(--sand);filter:none}
+.lp-get.android #btn-android{background:var(--terra);color:var(--terra-label);border:0;order:1}
+.lp-get.android #btn-android:hover{filter:brightness(1.05)}
+</style>
+</head>
+
+<body class="lp lp-get unknown">
+<main>
+
+  <img class="mark" src="mark.png" alt="EMOY" width="66" height="66">
+
+  <div>
+    <h1>One record. Everyone who&rsquo;s caring for them writes in it.</h1>
+  </div>
+  <p class="sub">Start a feed on one phone, end it on another. Grandparents see only what you send them.</p>
+
+  <div class="actions">
+
+    <a class="btn primary" id="btn-ios"
+       href="https://apps.apple.com/us/app/emoy/id6805184110">
+      <span>Download on iPhone</span><span class="arrow">&rarr;</span>
+    </a>
+
+    <!-- The same mailto the rest of the site uses for this, subject and all,
+         so every Android route into the beta arrives looking identical. It
+         replaces a placeholder testing-group URL: there is no public Play
+         listing to send anyone to yet, and a button that 404s is worse than
+         one that asks. Swap it for the real opt-in link when Android is
+         public — see the store-badge entry in docs/backlog.md, which is the
+         same trigger. -->
+    <a class="btn secondary" id="btn-android"
+       href="mailto:support@emoy.app?subject=Android%20beta">
+      <span>Android &mdash; ask for an invite</span><span class="arrow">&rarr;</span>
+    </a>
+
+    <p class="note" style="order:3"><span class="dot"></span><span id="status">Free on iPhone. Android is in internal testing &mdash; ask for an invite and I&rsquo;ll add you.</span></p>
+  </div>
+
+  <div class="claims">
+    <p><b>What we don&rsquo;t do</b></p>
+    <p>No ads. Nothing counting how you use the app. No screen recording. No third-party trackers.</p>
+  </div>
+
+  <footer>Questions: <a href="mailto:support@emoy.app">support@emoy.app</a> &nbsp;&middot;&nbsp; <a href="/">emoy.app</a></footer>
+
+</main>
+
+<script>
+(function () {
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS
+  var isAndroid = /Android/.test(ua);
+  var b = document.body;
+
+  // classList.add, not className =. The draft replaced the whole class
+  // attribute, which here would drop `lp lp-get` and take the page's styling
+  // with it. Same detection, same outcome, one class added.
+  if (isIOS) {
+    b.classList.remove("unknown");
+    b.classList.add("ios");
+    document.getElementById("status").textContent =
+      "Free. Android is in internal testing — tap below if you need it there too.";
+  } else if (isAndroid) {
+    b.classList.remove("unknown");
+    b.classList.add("android");                    // promotes the Android button
+    document.getElementById("status").textContent =
+      "Android is in internal testing, so it’s invite-only for now. iPhone is live on the App Store.";
+  }
+  // desktop, bots and JS-off keep the default: iOS primary, Android secondary,
+  // both links working. Nothing is ever hidden behind detection.
+})();
+</script>
+</body>
+</html>

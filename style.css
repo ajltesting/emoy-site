@@ -650,6 +650,11 @@ html { scroll-behavior: smooth; }
    So: internals tight enough to read as one unit, and one real break before
    the footer. .band's 72px padding and .site-footer's 66px stacked into a
    142px void here; both are overridden. */
+/* DEAD as of the /get turn: invite.html is now a redirect and no page carries
+   .lp-invite any more. Kept rather than deleted because every rule below is the
+   record of a design turn's measurements — the eight medium gaps, Apple's
+   clear-space ratio, the specificity note. Delete it or revive the page, but do
+   not quietly re-derive it. */
 .lp-invite .invite-band {
   padding-top: clamp(var(--space-4), 2vw, var(--space-6));
   padding-bottom: var(--space-6);
