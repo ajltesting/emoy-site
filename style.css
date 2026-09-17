@@ -257,6 +257,10 @@ html { scroll-behavior: smooth; }
   display: flex; gap: 10px; align-items: center; justify-content: center;
   text-align: center;
 }
+/* `.lp .beta-banner a`, not `.beta-banner a`: `.lp a` is (0,1,1) and would
+   otherwise paint the link --accent-deep on the ink ground. */
+.lp .beta-banner a { color: var(--ink-accent); text-decoration: underline; text-underline-offset: 2px; }
+.lp .beta-banner a:hover { color: var(--ink-cream); }
 .beta-dot {
   width: 7px; height: 7px; border-radius: 999px; background: var(--ink-accent);
   flex: 0 0 auto; animation: emoyPulse 2.4s ease-in-out infinite;
@@ -349,19 +353,15 @@ html { scroll-behavior: smooth; }
   max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
 }
 .hero .lede { max-width: 30em; }   /* the 26px moved onto h1, which owns it */
-.badges { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; margin-top: 30px; }
-.store-badge {
-  display: inline-flex; align-items: center; gap: 10px;
-  height: 56px; padding: 0 18px 0 14px;
-  background: var(--ink); color: #fff;
-  border-radius: 12px;
-  user-select: none;
-}
-.store-badge-mark { width: 26px; height: 26px; flex-shrink: 0; }
-.store-badge-text { display: flex; flex-direction: column; line-height: 1.15; }
-.store-badge-eyebrow { font: 500 10px/1.2 "Figtree", sans-serif; letter-spacing: .04em; opacity: .8; }
-.store-badge-label { font: 600 17px/1.15 "Figtree", sans-serif; letter-spacing: -.005em; margin-top: 3px; }
-.badge-note { margin-top: 14px; font-size: var(--type-1); line-height: 1.6; color: var(--muted); max-width: 34em; }
+/* The official "Download on the App Store" badge. Apple's artwork, unmodified
+   (site/badges/app-store.svg, from developer.apple.com); Apple asks for at least
+   40px of height and clear space around it, which the cta-row gap provides. */
+.store-link { display: inline-flex; align-items: center; }
+.store-link img { display: block; height: 54px; width: auto; }
+/* `.lp .badge-note`, not `.badge-note`: `.lp p` (0,1,1) zeroed this margin, which
+   put the note inside the App Store badge's clear space (Apple asks for a
+   quarter of the badge's height; --space-4 is 17.6px against a 54px badge). */
+.lp .badge-note { margin-top: var(--space-4); font-size: var(--type-1); line-height: 1.6; color: var(--muted); max-width: 34em; }
 
 .hero-cards { position: relative; display: flex; flex-direction: column; gap: 18px; padding: 24px 0; }
 .blob { position: absolute; border-radius: 999px; z-index: 0; }
@@ -657,7 +657,10 @@ html { scroll-behavior: smooth; }
 .lp-invite h1 { font-size: var(--t-display); line-height: 1.06; }
 .lp-invite .kicker { margin-bottom: var(--space-2); }
 .lp-invite .invite-band .lede { margin-top: var(--space-3); }
-.lp-invite .cta-row { margin-top: var(--space-4); gap: var(--space-2); }
+/* gap is --space-4 (17.6px), not --space-2: the row now leads with the App Store
+   badge, and Apple asks for a quarter of its 54px height (13.5px) as clear space.
+   --space-3 is 13.2px, which misses it. */
+.lp-invite .cta-row { margin-top: var(--space-4); gap: var(--space-4); }
 .lp-invite .invite-note { margin-top: var(--space-3); color: var(--muted); font-size: var(--type-body); }
 .lp-invite .invite-facts {
   margin-top: var(--space-6); max-width: var(--measure-prose);

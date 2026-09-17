@@ -16,7 +16,7 @@
 </header>
 <main>
 <h1>EMOY — Privacy Policy</h1>
-<p><strong>Effective date:</strong> 8 September 2026 <strong>Contact:</strong> support@emoy.app</p>
+<p><strong>Effective date:</strong> 17 September 2026 <strong>Contact:</strong> support@emoy.app</p>
 <h2>Who we are</h2>
 <p>EMOY ("the app") is a shared care record for parents and caregivers. It is operated by the individual developer reachable at the contact address above.</p>
 <h2>The short version</h2>
@@ -24,10 +24,11 @@
 <h2>What the app stores</h2>
 <p>Everything below is stored because the app cannot do its job without it. There is no secondary collection.</p>
 <h3>Your account</h3>
-<ul><li><strong>Email address and password.</strong> Handled by our authentication provider; the password is stored only as a salted hash, never in readable form.</li><li><strong>Display name.</strong> Used to show who logged each entry ("Logged by Ayden").</li></ul>
+<ul><li><strong>Email address and password</strong>, if you sign up with them. Handled by our authentication provider; the password is stored only as a salted hash, never in readable form.</li><li><strong>Sign in with Google</strong>, if you choose it. We receive and store your email address, your name, a link to your Google profile photo, and Google's identifier for your account.</li><li><strong>Sign in with Apple</strong>, if you choose it. We receive and store your email address — or, if you choose to hide it, a private relay address from Apple — and Apple's identifier for your account. Apple shares your name only the first time you sign in.</li><li><strong>Display name.</strong> Used to show who logged each entry ("Logged by Ayden").</li></ul>
+<p>With Google or Apple, your password for that account never reaches us. The app uses the name only to suggest your display name, and never uses the profile photo. Your account with Google or Apple is governed by their own privacy policies.</p>
 <h3>Your child's profile</h3>
-<ul><li>Name, date of birth, sex, and whether they were born prematurely (with gestational age, if given).</li><li>Birth weight and birth length, if entered. Optional.</li></ul>
-<p>Sex and gestational age are stored because growth percentiles are calculated against sex-specific and age-corrected WHO/CDC reference tables. They are not used for anything else.</p>
+<ul><li>Name, date of birth and sex.</li><li>Birth weight and birth length, if entered. Optional.</li><li>Which kinds of feeds and activities you choose to track, and how often you expect to log them.</li></ul>
+<p>Sex is stored because growth percentiles are calculated against sex-specific WHO/CDC reference tables. It is not used for anything else.</p>
 <h3>Care records</h3>
 <ul><li><strong>Sleep, feeding, nappy changes and activities</strong> — start and end times, plus details for each kind: feed volumes and units, nursing side and duration, nappy contents, colour and size, activity type.</li><li><strong>Growth measurements</strong> — weight, length, the date measured, and any note.</li><li><strong>Milestones</strong> — which developmental or "first" milestones were reached, when, and any note.</li></ul>
 <h3>Photos and videos</h3>
@@ -57,7 +58,7 @@
 <p>The information in this app is *about* a child but is provided *by* an adult caregiver who holds the account. The app is not directed at children, is not offered in the Kids Category, and we do not knowingly allow anyone under 13 to create an account.</p>
 <p>The adult account holder is responsible for what they enter and for whom they invite into a Circle.</p>
 <h2>Who else is involved</h2>
-<p>We use three service providers. They process data on our behalf, under their own security commitments, and are not permitted to use it for their own purposes.</p>
+<p>We use the service providers below. They process data on our behalf, under their own security commitments, and are not permitted to use it for their own purposes.</p>
 <table><thead><tr><th>Provider</th><th>What they do</th><th>What they see</th></tr></thead><tbody><tr><td><strong>Supabase</strong></td><td>Database, authentication and file storage</td><td>All app data described above</td></tr><tr><td><strong>Sentry</strong></td><td>Crash and performance reporting</td><td>Diagnostic data only; no account or child data</td></tr><tr><td><strong>Anthropic</strong> *(not yet in use)*</td><td>Will answer your questions about your child's record, once the assistant described above exists</td><td>The question you ask, plus a summary of your child's recent care data</td></tr><tr><td><strong>Expo (EAS)</strong></td><td>Delivers app updates, and delivers notifications to Apple and Google</td><td>Technical request data needed to serve an update; for a notification, its token and the text shown on the lock screen</td></tr></tbody></table>
 <h2>Security</h2>
 <ul><li>All traffic between the app and our servers is encrypted in transit (HTTPS).</li><li>Data is encrypted at rest by our database and storage provider.</li><li>Access is enforced at the database level by row-level security rules, not only in the app: a household's records are readable only by that household's members, and a Circle member can read only the categories that Circle has been granted.</li><li>Photos and videos are held in a private bucket and are never publicly addressable.</li></ul>
@@ -66,13 +67,16 @@
 <p><strong>One thing account deletion cannot reach.</strong> Anything already sent to a service provider has left our systems. Deleting your account removes what we hold; it cannot reach back into somebody else's.</p>
 <h2>How long we keep it</h2>
 <p>We keep your data for as long as your account exists.</p>
-<ul><li><strong>Delete your account</strong> — Settings → Delete my account. This permanently deletes your login and removes your access. If you are the only member of a household, that household and everything in it is permanently deleted. If others remain, the shared record stays intact for them, with your entries no longer attributed to you.</li><li><strong>Leave a household or Circle</strong> — removes your access without deleting the shared record.</li></ul>
+<ul><li><strong>Delete your account</strong> — Settings → Delete my account. This permanently deletes your login and removes your access. If you are the only member of a household, that household and everything in it is permanently deleted. If others remain, the shared record stays intact for them, with your entries no longer attributed to you. If you signed in with Apple, we also ask Apple to revoke EMOY's access to your Apple ID.</li><li><strong>Leave a household or Circle</strong> — removes your access without deleting the shared record.</li></ul>
 <p>Deletion is immediate and cannot be undone. Backups may retain data for a short period before being cycled out.</p>
 <h2>Your rights</h2>
 <p>Depending on where you live, you may have the right to access, correct, export, or delete your personal information, to object to or restrict processing, and to complain to a data protection authority.</p>
 <p>Most of this is available directly in the app: your data is visible to you, editable by you, and deletable by you. For anything else, contact us at the address above and we will respond within 30 days.</p>
 <h2>Changes</h2>
 <p>If this policy changes materially, we will update the effective date above and notify you in the app before the change takes effect.</p>
+<p><strong>17 September 2026.</strong> Two corrections, both making this page match what the app already does. Nothing about how the app works has changed.</p>
+<p>This page said the app records whether a child was born prematurely and their gestational age, and uses them for growth percentiles. It never recorded either; that text described a design that was not built, and it has been removed.</p>
+<p>This page also described signing in only with an email address and password. The app has offered Sign in with Google and Sign in with Apple since it launched, and it now says what each one shares with us, and that deleting your account also revokes EMOY's access to your Apple ID.</p>
 <p><strong>8 September 2026.</strong> One change, and it is a loosening, so we would rather say so plainly than dress it up.</p>
 <p>The commitment not to train machine-learning models on your photos or your child's data previously admitted no exception at all. It now names one: we would have to ask you first, and nothing would be used unless you chose it. Nothing about how the app works today has changed, and no data has ever been used this way. We are setting the condition out now rather than quietly revising a promise later.</p>
 <p><strong>3 September 2026.</strong> Two changes.</p>
