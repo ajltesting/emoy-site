@@ -26,10 +26,12 @@
 <link rel="preload" href="fonts/caprasimo-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
-/* This page is deliberately chrome-free: no beta banner, no site header, no
-   footer grid. It is a link target pasted into messages, and everything on it
-   is either a store link or a reason to tap one. So it takes style.css for the
-   self-hosted fonts and the shared base only, and carries its own layout.
+/* This page carries the site's own header — brand left, one pill right — and
+   nothing else of the site's chrome: no beta banner, no footer grid. (It was
+   fully chrome-free until 2026-09-17; Ayden asked for the brand and the "See
+   how it works" link to sit where they do on every other page.) It is a link
+   target pasted into messages, so everything below the header is either a
+   store link or a reason to tap one, and the layout is this page's own.
 
    body.lp is required, not decorative: style.css's legal-page layer is scoped
    to body:not(.lp) and carries a prefers-color-scheme dark mode. Without .lp a
@@ -56,15 +58,28 @@ body.lp.lp-get{
   --terra-label:#0e0c0b;
   --rule:rgba(60,55,51,.16);
 }
+/* Column, not centred: the site header sits at the top and main takes the rest
+   and centres its own contents inside it. That keeps this page vertically
+   centred the way it was while gaining the header every other page has. */
 body.lp-get{
   background:var(--cream); color:var(--body);
   font:400 17px/1.6 "Figtree",-apple-system,"Segoe UI",sans-serif;
-  min-height:100dvh; display:flex; align-items:center; justify-content:center;
-  padding:40px 22px; -webkit-font-smoothing:antialiased;
+  min-height:100dvh; display:flex; flex-direction:column;
+  -webkit-font-smoothing:antialiased;
 }
-.lp-get main{width:100%; max-width:430px; display:flex; flex-direction:column; gap:30px}
-
-.lp-get .mark{width:66px;height:66px;display:block}
+/* The shared .site-header is built for a 1144px landing page; here it only has
+   to agree with main's 430px column, so it borrows the same measure. */
+.lp-get .site-header{max-width:474px; padding:20px 22px; width:100%}
+/* style.css gives .nav width:100% below 560px so the landing page's SIX nav
+   items get their own row under the brand. This header has one pill, and the
+   ask was for it beside the mark, so it keeps its intrinsic width — (0,2,0)
+   against that rule's (0,1,0), which wins regardless of the media query. */
+.lp-get .nav{width:auto}
+.lp-get main{
+  width:100%; max-width:430px; margin:0 auto; flex:1;
+  display:flex; flex-direction:column; justify-content:center; gap:30px;
+  padding:16px 22px 40px;
+}
 /* margin-bottom:0 overrides .lp h1's heading gap — the stack's flex gap owns
    the spacing on this page, and the two would otherwise add up. */
 .lp-get h1{
@@ -74,37 +89,46 @@ body.lp-get{
 }
 .lp-get .sub{font-size:1.05rem; color:var(--body); max-width:34ch}
 
-.lp-get .actions{display:flex; flex-direction:column; gap:12px}
+/* align-items:flex-start so each action sizes to its own content. The App
+   Store badge is a fixed-aspect image that must not be stretched, and a
+   full-width Android button beside a 162px badge would read as the louder of
+   the two whichever one detection had promoted.
+   gap:16px is not arbitrary: Apple asks for clear space of a QUARTER of the
+   badge's height around it, and the badge is 54px tall. style.css makes the
+   same allowance for .badge-note on the homepage. */
+.lp-get .actions{display:flex; flex-direction:column; align-items:flex-start; gap:16px}
+
+/* The OFFICIAL badge, unmodified and at the homepage's own 54px height — the
+   only way Apple's Identity Guidelines allow their logo on a download link.
+   It carries no promoted/demoted styling because it cannot: the artwork is
+   fixed. Detection expresses its rank by ORDER alone. */
+.lp-get .store-link{display:inline-flex; align-items:center; border-radius:10px}
+.lp-get .store-link img{display:block; height:54px; width:auto}
+.lp-get .store-link:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
+
+/* Sized to match the badge's 54px so the two read as siblings rather than as
+   a button and a picture. */
 .lp-get a.btn{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:19px 24px; border-radius:18px; text-decoration:none;
-  font-weight:700; font-size:1.05rem; letter-spacing:-.01em;
-  transition:transform .12s ease, filter .12s ease;
+  display:inline-flex; align-items:center; justify-content:space-between; gap:14px;
+  min-height:54px; padding:0 22px; border-radius:14px; text-decoration:none;
+  font-weight:700; font-size:1rem; letter-spacing:-.01em;
+  transition:transform .12s ease, filter .12s ease, background .12s ease;
 }
 .lp-get a.btn:active{transform:scale(.985)}
 .lp-get a.btn:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
 .lp-get a.btn .arrow{font-weight:400; opacity:.75}
 
-.lp-get a.primary{background:var(--terra); color:var(--terra-label)}
-.lp-get a.primary:hover{filter:brightness(1.05); color:var(--terra-label)}
 .lp-get a.secondary{background:transparent; color:var(--ink); border:1px solid var(--rule)}
 .lp-get a.secondary:hover{background:var(--sand); color:var(--ink)}
 
-/* The third weight. An outline pill sized to its own text, so the eye reads
-   two store buttons first and this after — not a third equal choice. Its own
-   rule rather than a.secondary, which is full-width by inheriting a.btn. */
-.lp-get a.tertiary{
-  align-self:flex-start; margin-top:4px;
-  padding:11px 18px; border-radius:999px; border:1px solid var(--rule);
-  color:var(--ink); text-decoration:none;
-  font-weight:600; font-size:.95rem; letter-spacing:-.01em;
-  transition:border-color .12s ease, color .12s ease;
-}
-.lp-get a.tertiary:hover{border-color:var(--terra); color:var(--terra-deep)}
-.lp-get a.tertiary:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
-.lp-get a.tertiary .arrow{font-weight:400; opacity:.75}
+/* Order lives HERE, not in an inline style attribute. Inline beats every
+   selector, so `style="order:1"` on the badge silently defeated the .android
+   swap below — caught by reading the computed order in both states. */
+.lp-get #btn-ios{order:1}
+.lp-get #btn-android{order:2}
 
 .lp-get .note{
+  order:3;
   font-size:.92rem; color:var(--sage-deep); font-weight:600;
   display:flex; gap:9px; align-items:flex-start;
 }
@@ -125,20 +149,38 @@ body.lp-get{
 .lp-get footer{font-size:.88rem}
 .lp-get footer a{color:var(--terra-deep); text-underline-offset:3px; text-decoration:underline}
 
-/* platform swap. Default = iOS primary (it's the live one).
-   JS only promotes Android when we detect Android, so with JS off
-   or on a bot, everyone still gets both working links. */
-.lp-get.android #btn-ios{background:transparent;color:var(--ink);border:1px solid var(--rule);order:2}
-.lp-get.android #btn-ios:hover{background:var(--sand);filter:none}
-.lp-get.android #btn-android{background:var(--terra);color:var(--terra-label);border:0;order:1}
-.lp-get.android #btn-android:hover{filter:brightness(1.05)}
+/* platform swap. Default = the App Store badge first (iPhone is the live one).
+   JS only promotes Android when we detect Android, so with JS off or on a bot,
+   everyone still gets both working links.
+   The badge cannot change appearance, so rank is carried by ORDER for it and
+   by FILL for the Android button — which is why the Android button is the only
+   one that restyles. */
+.lp-get.android #btn-ios{order:2}
+.lp-get.android #btn-android{
+  order:1; background:var(--terra); color:var(--terra-label); border-color:transparent;
+}
+.lp-get.android #btn-android:hover{background:var(--terra); filter:brightness(1.05); color:var(--terra-label)}
 </style>
 </head>
 
 <body class="lp lp-get unknown">
-<main>
 
-  <img class="mark" src="mark.png" alt="EMOY" width="66" height="66">
+<!-- The site's own header, same markup and classes as / and the old /invite,
+     so the brand sits where it does on every other page. It replaces the 66px
+     mark that used to float above the headline — the mark is in the header
+     now, and showing it twice on one short page was the cost of not having a
+     header at all. -->
+<header class="site-header">
+  <a class="brand" href="/">
+    <img src="mark.png" alt="" width="40" height="40">
+    <span class="wordmark">EMOY<span class="dot">.</span></span>
+  </a>
+  <nav class="nav" aria-label="About this app">
+    <a class="pill pill-outline pill-sm" href="/">See how it works</a>
+  </nav>
+</header>
+
+<main>
 
   <div>
     <h1>One record. Everyone who&rsquo;s caring for them writes in it.</h1>
@@ -147,9 +189,9 @@ body.lp-get{
 
   <div class="actions">
 
-    <a class="btn primary" id="btn-ios"
+    <a class="store-link" id="btn-ios"
        href="https://apps.apple.com/us/app/emoy/id6805184110">
-      <span>Download on iPhone</span><span class="arrow">&rarr;</span>
+      <img src="badges/app-store.svg" alt="Download on the App Store" width="162" height="54">
     </a>
 
     <!-- The same mailto the rest of the site uses for this, subject and all,
@@ -164,14 +206,7 @@ body.lp-get{
       <span>Android &mdash; ask for an invite</span><span class="arrow">&rarr;</span>
     </a>
 
-    <p class="note" style="order:3"><span class="dot"></span><span id="status">Free on iPhone. Android is in internal testing &mdash; ask for an invite and I&rsquo;ll add you.</span></p>
-
-    <!-- For the visitor who wants to know what this is before installing it.
-         Deliberately a THIRD weight: sized to its text, not full width, and
-         ordered below the status note, so it never competes with whichever
-         store button detection has promoted. Same wording and destination the
-         old /invite page used. order:4 keeps it last in both states. -->
-    <a class="tertiary" id="btn-story" style="order:4" href="/">See how it works <span class="arrow">&rarr;</span></a>
+    <p class="note"><span class="dot"></span><span id="status">Free on iPhone. Android is in internal testing &mdash; ask for an invite and I&rsquo;ll add you.</span></p>
   </div>
 
   <div class="claims">
