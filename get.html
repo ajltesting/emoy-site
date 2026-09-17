@@ -90,6 +90,20 @@ body.lp-get{
 .lp-get a.secondary{background:transparent; color:var(--ink); border:1px solid var(--rule)}
 .lp-get a.secondary:hover{background:var(--sand); color:var(--ink)}
 
+/* The third weight. An outline pill sized to its own text, so the eye reads
+   two store buttons first and this after — not a third equal choice. Its own
+   rule rather than a.secondary, which is full-width by inheriting a.btn. */
+.lp-get a.tertiary{
+  align-self:flex-start; margin-top:4px;
+  padding:11px 18px; border-radius:999px; border:1px solid var(--rule);
+  color:var(--ink); text-decoration:none;
+  font-weight:600; font-size:.95rem; letter-spacing:-.01em;
+  transition:border-color .12s ease, color .12s ease;
+}
+.lp-get a.tertiary:hover{border-color:var(--terra); color:var(--terra-deep)}
+.lp-get a.tertiary:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
+.lp-get a.tertiary .arrow{font-weight:400; opacity:.75}
+
 .lp-get .note{
   font-size:.92rem; color:var(--sage-deep); font-weight:600;
   display:flex; gap:9px; align-items:flex-start;
@@ -151,6 +165,13 @@ body.lp-get{
     </a>
 
     <p class="note" style="order:3"><span class="dot"></span><span id="status">Free on iPhone. Android is in internal testing &mdash; ask for an invite and I&rsquo;ll add you.</span></p>
+
+    <!-- For the visitor who wants to know what this is before installing it.
+         Deliberately a THIRD weight: sized to its text, not full width, and
+         ordered below the status note, so it never competes with whichever
+         store button detection has promoted. Same wording and destination the
+         old /invite page used. order:4 keeps it last in both states. -->
+    <a class="tertiary" id="btn-story" style="order:4" href="/">See how it works <span class="arrow">&rarr;</span></a>
   </div>
 
   <div class="claims">
