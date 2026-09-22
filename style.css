@@ -199,8 +199,17 @@ body.lp {
   font-family: "Caprasimo", Georgia, serif;
   font-weight: 400;               /* Caprasimo ships one weight; never bold it */
   color: var(--ink);
-  margin: 0;
 }
+/* THE RESETS WEIGH NOTHING. `.lp p` and `.lp ul, .lp ol` were (0,1,1), so
+   every single-class rule that gave a p, ul or ol a margin lost to them,
+   whatever the source order — fifteen declared margins had never rendered
+   (every kicker's gap, the role lists, the signature, the exception box...),
+   and `.band > *` lost its centring on text but not on grids, which put the
+   page on three left edges. :where() drops the resets to (0,0,1), so any
+   class rule now beats them as written. `.lp a` is left as it was: every
+   rule that fought it has already been qualified, and none is dead. */
+:where(.lp) :where(h1, h2, h3, p, ul, ol) { margin: 0; }
+:where(.lp) :where(ul, ol) { padding: 0; list-style: none; }
 /* SPACE AFTER A HEADING TRACKS THE HEADING, at about 0.43 of its own size —
    the ratio h1 already used (26 under 62px) and the only one on this page that
    looks deliberate. It was inverted before: h1 got 26, h3 got 8-12, and h2 got
@@ -214,11 +223,9 @@ body.lp {
          margin-bottom: clamp(var(--space-3), 1.4vw, var(--space-4)); }
 .lp h2.h2-village { font-size: var(--t-display); line-height: 1.08; max-width: 18em; }
 .lp h3 { font-size: var(--t-h4); line-height: 1.25; margin-bottom: var(--space-2); }
-.lp p { margin: 0; }
 .lp a { color: var(--accent-deep); text-decoration: none; }
 .lp a:hover { color: var(--accent); }
 .lp img { max-width: 100%; }
-.lp ul, .lp ol { margin: 0; padding: 0; list-style: none; }
 
 html { scroll-behavior: smooth; }
 
@@ -236,14 +243,15 @@ html { scroll-behavior: smooth; }
 .para + .para { margin-top: 12px; }
 
 /* ── Bands ───────────────────────────────────────────────────────────────── */
-.band { padding: var(--pad-y) var(--pad-x); scroll-margin-top: 24px; }
-.band > * { max-width: var(--measure); margin-inline: auto; }
-/* AFTER the rule above, deliberately. `.band > *` and `.lede-wide` have the
-   same specificity, so whichever is written last wins — and the grid measure
-   was silently clobbering the prose measure, which is why the paragraphs kept
-   running to ~100 characters however the prose rules were tuned. Prose is
-   re-narrowed here, where source order guarantees it sticks. */
-.band > .lede, .band > .para, .band > .lede-wide { max-width: var(--measure-prose); margin-inline: 0; }
+/* THE COLUMN IS THE BAND'S OWN PADDING. The gutter is the page padding, or
+   whatever centres a --measure column, whichever is larger — so every child
+   starts on the header's left edge with nothing to centre, and prose keeps its
+   own 58ch measure by simply being narrower. This replaces `.band > *
+   { max-width; margin-inline: auto }`, which centred the grids but not the
+   text: 100px apart at 1440, 340px at 1920. The header uses the same gutter,
+   and the value is identical to --pad-x at every width below 1240px. */
+.lp { --gutter: max(var(--pad-x), calc((100% - var(--measure)) / 2)); }
+.band { padding: var(--pad-y) var(--gutter); scroll-margin-top: 24px; }
 .band.ink { background: var(--ink-ground); }
 .band.ink h2, .band.ink h3 { color: var(--ink-cream); }
 .band.ink .lede, .band.ink .para { color: var(--ink-secondary); }
@@ -267,8 +275,12 @@ html { scroll-behavior: smooth; }
 }
 .site-header {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 16px;
-  padding: 22px var(--pad-x);
-  max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
+  /* Full-bleed with the bands' gutter, not a centred max-width box: the
+     sticky header's background only covered the box, so on a wide screen the
+     ink privacy band showed through down both sides. Same content edges.
+     margin-inline stays for /get, which caps this header at 474px and relies
+     on it to centre; here, with no max-width, it resolves to 0. */
+  padding: 22px var(--gutter); margin-inline: auto;
 }
 .lp .brand { display: flex; align-items: center; gap: 11px; }
 .lp .wordmark {
@@ -410,7 +422,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* ── 3. What it is ───────────────────────────────────────────────────────── */
-.what-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; margin-top: 40px; align-items: start; }
+.what-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; margin-top: var(--space-10); align-items: start; }
 .day-card { background: var(--surface); padding: 24px; }
 .day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .day-date { font-family: "Caprasimo", Georgia, serif; font-size: var(--type-3); color: var(--ink); }
@@ -449,7 +461,7 @@ html { scroll-behavior: smooth; }
 .what-side .card { background: var(--surface); }
 
 /* ── 4. Who sees what ────────────────────────────────────────────────────── */
-.roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; margin-top: 40px; }
+.roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; margin-top: var(--space-10); }
 .role { background: var(--surface); border-top: 5px solid var(--role); display: flex; flex-direction: column; }
 .role-kicker { font: 600 13px/1 "Figtree", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--role-kicker); }
 .role-line { margin-top: 10px; font-family: "Caprasimo", Georgia, serif; font-size: var(--type-3); line-height: 1.2; color: var(--ink); }
@@ -493,7 +505,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* ── 7. Privacy ──────────────────────────────────────────────────────────── */
-.privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+.privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: var(--space-10); }
 .band.ink .card { background: var(--ink-surface); }
 .band.ink .card h3 { font-size: var(--t-h4); }
 .exception {
@@ -504,8 +516,11 @@ html { scroll-behavior: smooth; }
 .band.ink .cta-row { margin-top: 26px; }
 
 /* ── 8. Questions ────────────────────────────────────────────────────────── */
-.faq { display: flex; flex-direction: column; gap: 30px; margin-top: 34px; max-width: 46em; }
-.faq-item h3 { font-size: var(--t-h2); line-height: 1.12;
+/* Left on the page's edge, like every other band — it was the only block that
+   centred, so its kicker sat 300px left of it. Questions step down to --t-h3:
+   at --t-h2 each one was the size of a section title, four in a row. */
+.faq { display: flex; flex-direction: column; gap: 30px; margin-top: var(--space-2); max-width: 46em; }
+.faq-item h3 { font-size: var(--t-h3); line-height: 1.12;
                margin-bottom: clamp(var(--space-2), 1.05vw, var(--space-3)); }
 
 /* ── 9. Footer ───────────────────────────────────────────────────────────── */
@@ -540,6 +555,9 @@ html { scroll-behavior: smooth; }
    which are only (0,1,0), because a media query adds NO specificity. `.steps`
    stopped collapsing to one column on a phone as a direct result. Any rule
    qualified with `.lp ` must be qualified in its media queries too.
+   The resets are now :where() and weigh (0,0,1), so a NEW bare class rule
+   wins as written and needs no `.lp ` — the existing qualified ones are
+   harmless and stay, with the media-query caveat above still binding them.
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* ═══ Responsive ═════════════════════════════════════════════════════════════
