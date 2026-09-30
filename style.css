@@ -84,6 +84,11 @@ body:not(.lp) header { padding-top: 34px; padding-bottom: 10px; }
    in the HTML are intrinsic hints, and nothing was overriding them. Both now
    scale with the viewport, clamped so they never outgrow the header either. */
 .brand img { width: clamp(32px, 8.5vw, 40px); height: auto; }
+/* The legal pages go dark with the system, and the day mark is ink on
+   transparent: invisible on --bg #211d19 (2026-09-30). They swap in the app's
+   own night mark (assets/icon/emoy-mark-night@3x.png) with <picture>. The
+   <picture> is the flex item, so it must not sit on a text baseline. */
+.brand picture { display: flex; }
 .wordmark {
   font-size: var(--t-h3); font-weight: 700;
   letter-spacing: .5px; color: var(--text);
