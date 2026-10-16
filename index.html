@@ -14,7 +14,7 @@
 
 <div class="beta-banner">
   <span class="beta-dot" aria-hidden="true"></span>
-  <span>EMOY is on the App Store for iPhone. On Android? The beta is open — <a href="mailto:support@emoy.app?subject=Android%20beta">ask to join</a>.</span>
+  <span>EMOY is on the <a href="https://apps.apple.com/app/id6805184110">App Store</a> and <a href="https://play.google.com/store/apps/details?id=com.ajltesting.familycircle">Google Play</a>.</span>
 </div>
 
 <header class="site-header">
@@ -59,19 +59,28 @@
     <p class="lede">One live record of your child's day, written by the people caring for them — and an easy way to share the milestones, photos and videos with family and friends, while the rest of the day stays with you.</p>
 
     <div class="cta-row" id="get-app">
-      <a class="store-link" href="https://apps.apple.com/app/id6805184110"><img src="badges/app-store.svg" alt="Download on the App Store" width="162" height="54"></a>
-      <!-- Android sits beside iPhone, not only in the sentence underneath: the
-           two platforms are the same offer, and /get already presents them as
-           a pair. Same mailto and subject line every other Android route uses. -->
-      <a class="pill pill-outline pill-lg" href="mailto:support@emoy.app?subject=Android%20beta">Android &mdash; ask for an invite</a>
-      <!-- FILLED, not outlined: with Android arriving beside it, two identical
-           outline pills read as one repeated control rather than two different
-           offers. .pill-solid is the site's existing filled pill — the same one
-           the header carried until it was removed — so this is a treatment the
+      <!-- The two store badges get a row of their own, so "See how it works"
+           always sits on the line below them (Ayden, 2026-10-16) rather than
+           reading as a third download button at the end of the row. -->
+      <div class="store-row">
+        <a class="store-link" href="https://apps.apple.com/app/id6805184110"><img src="badges/app-store-wide.svg" alt="Download on the App Store" width="182" height="54"></a>
+        <!-- Android sits beside iPhone, not only in the sentence underneath:
+             the two platforms are the same offer, so they get the same
+             treatment — each store's official badge, both exactly 182×54.
+             Google's is unmodified; Apple's is widened to Google's proportions
+             from Apple's own paths (badges/app-store-wide.svg says how). Public
+             Play listing since 2026-10-16; no referrer or UTM, because the site
+             promises no analytics. -->
+        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.ajltesting.familycircle"><img src="badges/google-play.svg" alt="Get it on Google Play" width="182" height="54"></a>
+      </div>
+      <!-- FILLED, not outlined: it is the one call to action here that is not
+           a store badge, and it should not read as a third download button.
+           .pill-solid is the site's existing filled pill — the same one the
+           header carried until it was removed — so this is a treatment the
            page already had, moved to where it now does work. -->
       <a class="pill pill-solid pill-lg" href="#s-how">See how it works</a>
     </div>
-    <p class="badge-note">On Android? EMOY is on its way to Google Play, so the beta is invite-only while it is in testing.</p>
+    <p class="badge-note">Free on iPhone and Android.</p>
   </div>
 
   <div class="hero-cards">
@@ -388,7 +397,7 @@
     </div>
     <div class="faq-item">
       <h3>When can I get it?</h3>
-      <p class="para">Now, if you have an iPhone — <a href="https://apps.apple.com/app/id6805184110">EMOY is on the App Store</a>. Android is in testing before it reaches Google Play. <a href="mailto:support@emoy.app?subject=Android%20beta">Email us</a> and we will add you to the Android beta.</p>
+      <p class="para">Now. <a href="https://apps.apple.com/app/id6805184110">EMOY is on the App Store</a> for iPhone and <a href="https://play.google.com/store/apps/details?id=com.ajltesting.familycircle">on Google Play</a> for Android.</p>
     </div>
   </div>
 </section>
@@ -405,11 +414,11 @@
       </a>
       <p class="para">Questions, problems, or anything that did not work the way you expected — write to us. It is the two of us reading it.</p>
       <p><a class="mail" href="mailto:support@emoy.app">support@emoy.app</a></p>
-      <p class="footer-note">On the App Store for iPhone. The Android beta is open — ask to join.</p>
+      <p class="footer-note">On the App Store and Google Play.</p>
     </div>
     <ul class="footer-links">
       <li><a href="https://apps.apple.com/app/id6805184110">EMOY on the App Store</a></li>
-      <li><a href="mailto:support@emoy.app?subject=Android%20beta">Join the Android beta</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.ajltesting.familycircle">EMOY on Google Play</a></li>
       <li><a href="/privacy">Privacy policy</a></li>
       <li><a href="/delete-account">Delete your account</a></li>
     </ul>

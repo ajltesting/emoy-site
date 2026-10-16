@@ -351,6 +351,14 @@ html { scroll-behavior: smooth; }
    Hover keeps cream because #9c4f1d is dark enough for it (4.97:1). */
 .lp .pill-solid { background: var(--accent); color: #0e0c0b; }
 .lp .pill-solid:hover { background: var(--accent-deep); color: var(--ground); }
+/* The hero's "See how it works" only: WHITE label on a deeper terracotta
+   (Ayden, 2026-10-16, so it stands out under the two black store badges).
+   White on --accent is 3.61:1 and fails AA at this size, so the fill steps
+   down to #a85a26: white 5.05:1. Hover keeps white on --accent-deep, 5.92:1.
+   The other filled pills, and the "End feed" button in the app mock-up, keep
+   the near-black label above. */
+.lp .hero .cta-row .pill-solid { background: #a85a26; color: #fff; }
+.lp .hero .cta-row .pill-solid:hover { background: var(--accent-deep); color: #fff; }
 /* .22 composited on the cream ground is 1.56:1 — a UI boundary needs 3:1, and
    Organic's own guidance says not to draw hairline-only geometry. .50 is the
    first alpha that passes, at 3.12:1. The label was never the problem: it is
@@ -370,9 +378,20 @@ html { scroll-behavior: smooth; }
   max-width: calc(var(--measure) + 2 * var(--pad-x)); margin-inline: auto;
 }
 .hero .lede { max-width: 30em; }   /* the 26px moved onto h1, which owns it */
-/* The official "Download on the App Store" badge. Apple's artwork, unmodified
-   (site/badges/app-store.svg, from developer.apple.com); Apple asks for at least
-   40px of height and clear space around it, which the cta-row gap provides. */
+/* The store badges, both exactly 182×54. site/badges/google-play.svg is
+   Google's official badge, unmodified (Partner Marketing Hub, English web SVG).
+   app-store-wide.svg is Apple's (app-store.svg, developer.apple.com) widened to
+   Google's proportions from Apple's own paths, so the pair matches in width as
+   well as height (Ayden, 2026-10-16). Apple asks for at least 40px, Google for
+   at least 28px and for its badge to be no smaller than another store's beside
+   it. Both ask for clear space of a quarter of the height (13.5px), which the
+   cta-row's 14px gap provides. */
+/* The hero's CTAs are a column as wide as the badge row (Ayden, 2026-10-16):
+   the two badges side by side on top, "See how it works" stretched to their
+   combined width below. fit-content caps at the hero copy's width, so on a
+   phone the badge row wraps (one badge per line) and the pill is full width. */
+.hero .cta-row { flex-direction: column; width: fit-content; max-width: 100%; }
+.store-row { display: flex; flex-wrap: wrap; gap: 14px; }
 .store-link { display: inline-flex; align-items: center; }
 .store-link img { display: block; height: 54px; width: auto; }
 /* `.lp .badge-note`, not `.badge-note`: `.lp p` (0,1,1) zeroed this margin, which

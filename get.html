@@ -50,12 +50,6 @@
 body.lp.lp-get{
   --cream:#f5ead8; --sand:#ebddc5; --ink:#201e1d; --body:#3c3733;
   --terra:#c67139; --terra-deep:#9c4f1d; --sage:#7a8a5e; --sage-deep:#5c6b45;
-  /* The label on a solid terracotta button. NOT --cream, which measures
-     3.03:1 on this fill — below AA, on the one element the page exists to get
-     tapped. This is the site's own answer: .pill-solid in style.css puts this
-     same near-black on this same terracotta, for this same reason, and it
-     measures 5.41:1. Whichever button is promoted uses it. */
-  --terra-label:#0e0c0b;
   --rule:rgba(60,55,51,.16);
 }
 /* Column, not centred: the site header sits at the top and main takes the rest
@@ -89,37 +83,21 @@ body.lp-get{
 }
 .lp-get .sub{font-size:1.05rem; color:var(--body); max-width:34ch}
 
-/* align-items:flex-start so each action sizes to its own content. The App
-   Store badge is a fixed-aspect image that must not be stretched, and a
-   full-width Android button beside a 162px badge would read as the louder of
-   the two whichever one detection had promoted.
-   gap:16px is not arbitrary: Apple asks for clear space of a QUARTER of the
-   badge's height around it, and the badge is 54px tall. style.css makes the
-   same allowance for .badge-note on the homepage. */
+/* align-items:flex-start so each badge sizes to its own content: both are
+   fixed-aspect images that must not be stretched.
+   gap:16px is not arbitrary: Apple and Google both ask for clear space of a
+   QUARTER of the badge's height around it, and both badges are 54px tall.
+   style.css makes the same allowance for .badge-note on the homepage. */
 .lp-get .actions{display:flex; flex-direction:column; align-items:flex-start; gap:16px}
 
-/* The OFFICIAL badge, unmodified and at the homepage's own 54px height — the
-   only way Apple's Identity Guidelines allow their logo on a download link.
-   It carries no promoted/demoted styling because it cannot: the artwork is
-   fixed. Detection expresses its rank by ORDER alone. */
+/* The two store badges, both exactly 182×54 like the homepage's: Google's
+   official badge unmodified, and Apple's widened to Google's proportions from
+   Apple's own paths (badges/app-store-wide.svg). Neither carries
+   promoted/demoted styling because neither can: the artwork is fixed.
+   Detection expresses rank by ORDER alone. */
 .lp-get .store-link{display:inline-flex; align-items:center; border-radius:10px}
 .lp-get .store-link img{display:block; height:54px; width:auto}
 .lp-get .store-link:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
-
-/* Sized to match the badge's 54px so the two read as siblings rather than as
-   a button and a picture. */
-.lp-get a.btn{
-  display:inline-flex; align-items:center; justify-content:space-between; gap:14px;
-  min-height:54px; padding:0 22px; border-radius:14px; text-decoration:none;
-  font-weight:700; font-size:1rem; letter-spacing:-.01em;
-  transition:transform .12s ease, filter .12s ease, background .12s ease;
-}
-.lp-get a.btn:active{transform:scale(.985)}
-.lp-get a.btn:focus-visible{outline:2px solid var(--terra-deep); outline-offset:3px}
-.lp-get a.btn .arrow{font-weight:400; opacity:.75}
-
-.lp-get a.secondary{background:transparent; color:var(--ink); border:1px solid var(--rule)}
-.lp-get a.secondary:hover{background:var(--sand); color:var(--ink)}
 
 /* Order lives HERE, not in an inline style attribute. Inline beats every
    selector, so `style="order:1"` on the badge silently defeated the .android
@@ -149,17 +127,13 @@ body.lp-get{
 .lp-get footer{font-size:.88rem}
 .lp-get footer a{color:var(--terra-deep); text-underline-offset:3px; text-decoration:underline}
 
-/* platform swap. Default = the App Store badge first (iPhone is the live one).
-   JS only promotes Android when we detect Android, so with JS off or on a bot,
-   everyone still gets both working links.
-   The badge cannot change appearance, so rank is carried by ORDER for it and
-   by FILL for the Android button — which is why the Android button is the only
-   one that restyles. */
+/* platform swap. Default = the App Store badge first. JS moves Google Play
+   first only when we detect Android, so with JS off or on a bot, everyone
+   still gets both working badges. Both are official artwork that cannot
+   restyle, so rank is carried by ORDER alone (this was ORDER for the badge
+   and FILL for a text button until the Play badge arrived, 2026-10-16). */
 .lp-get.android #btn-ios{order:2}
-.lp-get.android #btn-android{
-  order:1; background:var(--terra); color:var(--terra-label); border-color:transparent;
-}
-.lp-get.android #btn-android:hover{background:var(--terra); filter:brightness(1.05); color:var(--terra-label)}
+.lp-get.android #btn-android{order:1}
 </style>
 </head>
 
@@ -191,22 +165,19 @@ body.lp-get{
 
     <a class="store-link" id="btn-ios"
        href="https://apps.apple.com/us/app/emoy/id6805184110">
-      <img src="badges/app-store.svg" alt="Download on the App Store" width="162" height="54">
+      <img src="badges/app-store-wide.svg" alt="Download on the App Store" width="182" height="54">
     </a>
 
-    <!-- The same mailto the rest of the site uses for this, subject and all,
-         so every Android route into the beta arrives looking identical. It
-         replaces a placeholder testing-group URL: there is no public Play
-         listing to send anyone to yet, and a button that 404s is worse than
-         one that asks. Swap it for the real opt-in link when Android is
-         public — see the store-badge entry in docs/backlog.md, which is the
-         same trigger. -->
-    <a class="btn secondary" id="btn-android"
-       href="mailto:support@emoy.app?subject=Android%20beta">
-      <span>Android &mdash; ask for an invite</span><span class="arrow">&rarr;</span>
+    <!-- The public Play listing (live 2026-10-16), behind Google's official
+         badge — the same treatment as the App Store badge above. It replaced
+         the beta mailto every Android route used while Android was
+         invite-only. No referrer or UTM: the site promises no analytics. -->
+    <a class="store-link" id="btn-android"
+       href="https://play.google.com/store/apps/details?id=com.ajltesting.familycircle">
+      <img src="badges/google-play.svg" alt="Get it on Google Play" width="182" height="54">
     </a>
 
-    <p class="note"><span class="dot"></span><span id="status">Free on iPhone. Android is in internal testing &mdash; ask for an invite and I&rsquo;ll add you.</span></p>
+    <p class="note"><span class="dot"></span><span id="status">Free on iPhone and Android.</span></p>
   </div>
 
   <div class="claims">
@@ -233,12 +204,12 @@ body.lp-get{
     b.classList.remove("unknown");
     b.classList.add("ios");
     document.getElementById("status").textContent =
-      "Free. Android is in internal testing — tap below if you need it there too.";
+      "Free. On Android too — Google Play is below.";
   } else if (isAndroid) {
     b.classList.remove("unknown");
     b.classList.add("android");                    // promotes the Android button
     document.getElementById("status").textContent =
-      "Android is in internal testing, so it’s invite-only for now. iPhone is live on the App Store.";
+      "Free on Google Play. iPhone is on the App Store.";
   }
   // desktop, bots and JS-off keep the default: iOS primary, Android secondary,
   // both links working. Nothing is ever hidden behind detection.
